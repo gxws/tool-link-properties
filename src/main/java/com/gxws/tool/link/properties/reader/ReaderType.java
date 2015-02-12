@@ -6,6 +6,6 @@ package com.gxws.tool.link.properties.reader;
  *
  */
 public enum ReaderType {
-	FILE(),HTTP(),ZK(),REDIS();
+	FILE(),HTTP(),ZOOKEEPER(),REDIS();
 
 }

@@ -16,11 +16,11 @@ import com.gxws.tool.link.properties.exception.LinkPropertiesRequestMissingExcep
  * @create 2015年2月10日下午2:37:19
  *
  */
-public class ZookeeperReader extends RemoteReader {
+public class ZookeeperReader implements Reader {
 
 	private Logger log = Logger.getLogger(getClass());
 
-	private String GLOBAL_REMOTE_ADDR_ZOOKEEPER = "global.remote.addr.zookeeper";
+	private final String GLOBAL_REMOTE_ADDR_ZOOKEEPER = "global.remote.addr.zookeeper";
 
 	private CuratorFramework cf;
 
@@ -33,14 +33,14 @@ public class ZookeeperReader extends RemoteReader {
 	 */
 	public ZookeeperReader(FileReader linkFile)
 			throws LinkPropertiesBaseException {
-		super(linkFile);
 		String zkValue = linkFile.valueString(GLOBAL_REMOTE_ADDR_ZOOKEEPER);
 		if (null == zkValue || "".equals(zkValue)) {
 			LinkPropertiesRequestMissingException e = new LinkPropertiesRequestMissingException();
 			e.setMessage(GLOBAL_REMOTE_ADDR_ZOOKEEPER);
 			throw e;
 		} else {
-			globalMap.put(GLOBAL_REMOTE_ADDR_ZOOKEEPER, zkValue);
+			ReaderFactory.GLOBAL_REMOTE_MAP.put(GLOBAL_REMOTE_ADDR_ZOOKEEPER,
+					zkValue);
 		}
 		init();
 	}
@@ -53,19 +53,27 @@ public class ZookeeperReader extends RemoteReader {
 	 *
 	 */
 	private void init() {
-		Builder builder = CuratorFrameworkFactory.builder()
-				.connectString(globalMap.get(GLOBAL_REMOTE_ADDR_ZOOKEEPER))
+		Builder builder = CuratorFrameworkFactory
+				.builder()
+				.connectString(
+						ReaderFactory.GLOBAL_REMOTE_MAP
+								.get(GLOBAL_REMOTE_ADDR_ZOOKEEPER))
 				.connectionTimeoutMs(5000).sessionTimeoutMs(5000)
 				.retryPolicy(new ExponentialBackoffRetry(1000, 3));
-		builder.namespace(globalMap.get(GLOBAL_PROJECT_ENV));
+		builder.namespace(ReaderFactory.GLOBAL_REMOTE_MAP
+				.get(ReaderFactory.GLOBAL_PROJECT_ENV));
 		cf = builder.build();
 		cf.start();
-		cf.newNamespaceAwareEnsurePath("/" + globalMap.get(GLOBAL_PROJECT_ENV));
+		cf.newNamespaceAwareEnsurePath("/"
+				+ ReaderFactory.GLOBAL_REMOTE_MAP
+						.get(ReaderFactory.GLOBAL_PROJECT_ENV));
 	}
 
 	@Override
 	public String valueString(String propertyKey) {
-		String path = "/" + globalMap.get(GLOBAL_PROJECT_NAME) + "/"
+		String path = "/"
+				+ ReaderFactory.GLOBAL_REMOTE_MAP
+						.get(ReaderFactory.GLOBAL_PROJECT_NAME) + "/"
 				+ propertyKey;
 		try {
 			return new String(cf.getData().forPath(path), "utf-8");

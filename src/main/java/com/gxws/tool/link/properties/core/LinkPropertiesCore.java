@@ -34,7 +34,11 @@ public class LinkPropertiesCore {
 
 	public LinkPropertiesCore() {
 		ct = new ClassReflect();
-		factory = new ReaderFactory();
+		try {
+			factory = new ReaderFactory();
+		} catch (LinkPropertiesBaseException e) {
+			log.error(e.getMessage(), e);
+		}
 	}
 
 	/**

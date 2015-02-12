@@ -33,7 +33,7 @@ public @interface LinkProperties {
 	/**
 	 * 读取配置数据类型
 	 * 
-	 * 只有global.env的值不为real test dev才有效
+	 * 只有global.project.env的值不为real test dev才有效
 	 * 
 	 * @author 朱伟亮
 	 * @create 2015年2月10日上午11:43:20
@@ -43,7 +43,7 @@ public @interface LinkProperties {
 	public ReaderType type() default ReaderType.FILE;
 
 	/**
-	 * 是否需要添加到application context
+	 * 是否需要添加到 servlet context
 	 * 
 	 * @author 朱伟亮
 	 * @create 2015年2月10日上午11:51:42

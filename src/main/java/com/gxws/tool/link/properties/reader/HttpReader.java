@@ -10,9 +10,9 @@ import com.gxws.tool.link.properties.exception.LinkPropertiesRequestMissingExcep
  * @create 2015年2月10日下午3:15:09
  *
  */
-public class HttpReader extends RemoteReader {
+public class HttpReader implements Reader {
 
-	private String GLOBAL_REMOTE_ADDR_HTTP = "global.remote.addr.http";
+	private final String GLOBAL_REMOTE_ADDR_HTTP = "global.remote.addr.http";
 
 	/**
 	 * @author 朱伟亮
@@ -22,14 +22,14 @@ public class HttpReader extends RemoteReader {
 	 * @throws LinkPropertiesBaseException
 	 */
 	public HttpReader(FileReader linkFile) throws LinkPropertiesBaseException {
-		super(linkFile);
 		String httpValue = linkFile.valueString(GLOBAL_REMOTE_ADDR_HTTP);
 		if (null == httpValue || "".equals(httpValue)) {
 			LinkPropertiesRequestMissingException e = new LinkPropertiesRequestMissingException();
 			e.setMessage(GLOBAL_REMOTE_ADDR_HTTP);
 			throw e;
 		} else {
-			globalMap.put(GLOBAL_REMOTE_ADDR_HTTP, httpValue);
+			ReaderFactory.GLOBAL_REMOTE_MAP.put(GLOBAL_REMOTE_ADDR_HTTP,
+					httpValue);
 		}
 	}
 
