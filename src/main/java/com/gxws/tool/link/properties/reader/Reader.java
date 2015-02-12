@@ -1,4 +1,4 @@
-package com.gxws.tool.link.properties.read;
+package com.gxws.tool.link.properties.reader;
 
 import com.gxws.tool.link.properties.exception.LinkPropertiesBaseException;
 
@@ -7,7 +7,7 @@ import com.gxws.tool.link.properties.exception.LinkPropertiesBaseException;
  * @create 2015年2月10日下午1:55:56
  *
  */
-public interface LinkPropertiesType {
+public interface Reader {
 	/**
 	 * 获取属性值
 	 * 

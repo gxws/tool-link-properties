@@ -1,6 +1,6 @@
 package com.gxws.tool.link.properties.info;
 
-import com.gxws.tool.link.properties.annotation.Type;
+import com.gxws.tool.link.properties.reader.ReaderType;
 
 /**
  * 配置项的相关信息
@@ -17,7 +17,7 @@ public class Property {
 
 	private String fullName;// 配置字段全名（包名+类名+字段名）
 
-	private Type type;// 读取配置的类型
+	private ReaderType type;// 读取配置的类型
 
 	private boolean contextScope;// 变量是否需要添加到web application context
 
@@ -29,11 +29,11 @@ public class Property {
 		this.contextScope = contextScope;
 	}
 
-	public Type getType() {
+	public ReaderType getType() {
 		return type;
 	}
 
-	public void setType(Type type) {
+	public void setType(ReaderType type) {
 		this.type = type;
 	}
 

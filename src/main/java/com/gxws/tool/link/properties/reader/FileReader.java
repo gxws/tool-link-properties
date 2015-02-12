@@ -1,4 +1,4 @@
-package com.gxws.tool.link.properties.read;
+package com.gxws.tool.link.properties.reader;
 
 import java.util.ResourceBundle;
 
@@ -13,7 +13,7 @@ import com.gxws.tool.link.properties.exception.LinkPropertiesValueException;
  * @create 2015年2月10日上午11:59:16
  *
  */
-public class LinkPropertiesFile implements LinkPropertiesType {
+public class FileReader implements Reader {
 
 	private ResourceBundle linkFile = null;
 

@@ -14,8 +14,8 @@ import com.gxws.tool.link.properties.classtool.ClassReflect;
 import com.gxws.tool.link.properties.classtool.ClassTool;
 import com.gxws.tool.link.properties.exception.LinkPropertiesBaseException;
 import com.gxws.tool.link.properties.info.Property;
-import com.gxws.tool.link.properties.read.LinkPropertiesType;
-import com.gxws.tool.link.properties.read.LinkPropertiesTypeFactory;
+import com.gxws.tool.link.properties.reader.Reader;
+import com.gxws.tool.link.properties.reader.ReaderFactory;
 
 /**
  * 获取相应配置类，读取配置信息，并写入相应的变量
@@ -30,11 +30,11 @@ public class LinkPropertiesCore {
 
 	private ClassTool ct;
 
-	private LinkPropertiesTypeFactory factory;
+	private ReaderFactory factory;
 
 	public LinkPropertiesCore() {
 		ct = new ClassReflect();
-		factory = new LinkPropertiesTypeFactory();
+		factory = new ReaderFactory();
 	}
 
 	public void handle(String[] classnames, ServletContext servletContext) {
@@ -52,7 +52,7 @@ public class LinkPropertiesCore {
 		Map<String, String> contextMap = new HashMap<>();
 		for (Property p : propertySet) {
 			try {
-				LinkPropertiesType link = factory.type(p.getType());
+				Reader link = factory.get(p.getType());
 				String value = link.get(p.getPropertyKey());
 				valueMap.put(p.getFullName(), value);
 				if (p.isContextScope()) {

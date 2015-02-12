@@ -1,4 +1,4 @@
-package com.gxws.tool.link.properties.read;
+package com.gxws.tool.link.properties.reader;
 
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.CuratorFrameworkFactory;
@@ -16,7 +16,7 @@ import com.gxws.tool.link.properties.exception.LinkPropertiesRequestMissingExcep
  * @create 2015年2月10日下午2:37:19
  *
  */
-public class LinkPropertiesZk extends LinkPropertiesRemote {
+public class ZookeeperReader extends RemoteReader {
 
 	private Logger log = Logger.getLogger(getClass());
 
@@ -33,7 +33,7 @@ public class LinkPropertiesZk extends LinkPropertiesRemote {
 	 * @param linkFile
 	 * @throws LinkPropertiesBaseException
 	 */
-	public LinkPropertiesZk(LinkPropertiesFile linkFile)
+	public ZookeeperReader(FileReader linkFile)
 			throws LinkPropertiesBaseException {
 		super(linkFile);
 		globalRemoteAddrZookeeperValue = linkFile

@@ -1,4 +1,4 @@
-package com.gxws.tool.link.properties.read;
+package com.gxws.tool.link.properties.reader;
 
 import com.gxws.tool.link.properties.exception.LinkPropertiesBaseException;
 
@@ -7,7 +7,7 @@ import com.gxws.tool.link.properties.exception.LinkPropertiesBaseException;
  * @create 2015年2月10日下午4:51:37
  *
  */
-public class LinkPropertiesRedis extends LinkPropertiesRemote {
+public class RedisReader extends RemoteReader {
 
 	/**
 	 * @author 朱伟亮
@@ -16,7 +16,7 @@ public class LinkPropertiesRedis extends LinkPropertiesRemote {
 	 * @param linkFile
 	 * @throws LinkPropertiesBaseException
 	 */
-	public LinkPropertiesRedis(LinkPropertiesFile linkFile)
+	public RedisReader(FileReader linkFile)
 			throws LinkPropertiesBaseException {
 		super(linkFile);
 		// TODO Auto-generated constructor stub

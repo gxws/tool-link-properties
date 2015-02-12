@@ -1,4 +1,4 @@
-package com.gxws.tool.link.properties.read;
+package com.gxws.tool.link.properties.reader;
 
 import com.gxws.tool.link.properties.exception.LinkPropertiesBaseException;
 
@@ -9,7 +9,7 @@ import com.gxws.tool.link.properties.exception.LinkPropertiesBaseException;
  * @create 2015年2月10日下午3:15:09
  *
  */
-public class LinkPropertiesHttp extends LinkPropertiesRemote {
+public class HttpReader extends RemoteReader {
 	
 	private String globalRemoteAddrHttpKey = "global.remote.addr.http";
 
@@ -22,7 +22,7 @@ public class LinkPropertiesHttp extends LinkPropertiesRemote {
 	 * @param linkFile
 	 * @throws LinkPropertiesBaseException
 	 */
-	public LinkPropertiesHttp(LinkPropertiesFile linkFile)
+	public HttpReader(FileReader linkFile)
 			throws LinkPropertiesBaseException {
 		super(linkFile);
 		globalRemoteAddrHttpValue = linkFile.get(globalRemoteAddrHttpKey);

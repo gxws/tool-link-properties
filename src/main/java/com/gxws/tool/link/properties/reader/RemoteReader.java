@@ -1,4 +1,4 @@
-package com.gxws.tool.link.properties.read;
+package com.gxws.tool.link.properties.reader;
 
 import com.gxws.tool.link.properties.exception.LinkPropertiesBaseException;
 import com.gxws.tool.link.properties.exception.LinkPropertiesRequestMissingException;
@@ -10,7 +10,7 @@ import com.gxws.tool.link.properties.exception.LinkPropertiesRequestMissingExcep
  * @create 2015年2月10日下午12:00:24
  *
  */
-public abstract class LinkPropertiesRemote implements LinkPropertiesType {
+public abstract class RemoteReader implements Reader {
 
 	protected String globalEnvKey = "global.env";
 
@@ -20,7 +20,7 @@ public abstract class LinkPropertiesRemote implements LinkPropertiesType {
 
 	protected String globalNameVlaue;
 
-	public LinkPropertiesRemote(LinkPropertiesFile linkFile)
+	public RemoteReader(FileReader linkFile)
 			throws LinkPropertiesBaseException {
 		globalEnvValue = linkFile.get(globalEnvKey);
 		globalNameVlaue = linkFile.get(globalNameKey);
