@@ -1,5 +1,8 @@
 package com.gxws.tool.link.properties.reader;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import com.gxws.tool.link.properties.exception.LinkPropertiesBaseException;
 import com.gxws.tool.link.properties.exception.LinkPropertiesRequestMissingException;
 
@@ -12,29 +15,29 @@ import com.gxws.tool.link.properties.exception.LinkPropertiesRequestMissingExcep
  */
 public abstract class RemoteReader implements Reader {
 
-	protected String globalEnvKey = "global.env";
+	protected Map<String, String> globalMap = new HashMap<>();
 
-	protected String globalEnvValue;
+	protected String GLOBAL_PROJECT_ENV = "global.project.env";
 
-	protected String globalNameKey = "global.name";
+	protected String GLOBAL_PROJECT_NAME = "global.project.name";
 
-	protected String globalNameVlaue;
-
-	public RemoteReader(FileReader linkFile)
-			throws LinkPropertiesBaseException {
-		globalEnvValue = linkFile.valueString(globalEnvKey);
-		globalNameVlaue = linkFile.valueString(globalNameKey);
+	public RemoteReader(FileReader linkFile) throws LinkPropertiesBaseException {
+		String envValue = linkFile.valueString(GLOBAL_PROJECT_ENV);
+		String nameVlaue = linkFile.valueString(GLOBAL_PROJECT_NAME);
 		LinkPropertiesRequestMissingException e = new LinkPropertiesRequestMissingException();
-		if (null == globalEnvValue || "".equals(globalEnvValue)) {
-			e.setMessage(globalEnvKey);
+		if (null == envValue || "".equals(envValue)) {
+			e.setMessage(GLOBAL_PROJECT_ENV);
 			throw e;
-		} else if (null == globalNameVlaue || "".equals(globalNameVlaue)) {
-			e.setMessage(globalNameKey);
+		} else if (null == nameVlaue || "".equals(nameVlaue)) {
+			e.setMessage(GLOBAL_PROJECT_NAME);
 			throw e;
+		} else {
+			globalMap.put(GLOBAL_PROJECT_ENV, envValue);
+			globalMap.put(GLOBAL_PROJECT_NAME, nameVlaue);
 		}
 	}
 
 	@Override
 	public abstract String valueString(String propertyKey);
-	
+
 }

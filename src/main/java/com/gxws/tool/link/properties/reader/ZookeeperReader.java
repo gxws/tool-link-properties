@@ -20,9 +20,7 @@ public class ZookeeperReader extends RemoteReader {
 
 	private Logger log = Logger.getLogger(getClass());
 
-	private String globalRemoteAddrZookeeperKey = "global.remote.addr.zookeeper";
-
-	private String globalRemoteAddrZookeeperValue;
+	private String GLOBAL_REMOTE_ADDR_ZOOKEEPER = "global.remote.addr.zookeeper";
 
 	private CuratorFramework cf;
 
@@ -36,13 +34,13 @@ public class ZookeeperReader extends RemoteReader {
 	public ZookeeperReader(FileReader linkFile)
 			throws LinkPropertiesBaseException {
 		super(linkFile);
-		globalRemoteAddrZookeeperValue = linkFile
-				.valueString(globalRemoteAddrZookeeperKey);
-		LinkPropertiesRequestMissingException e = new LinkPropertiesRequestMissingException();
-		if (null == globalRemoteAddrZookeeperValue
-				|| "".equals(globalRemoteAddrZookeeperValue)) {
-			e.setMessage(globalRemoteAddrZookeeperKey);
+		String zkValue = linkFile.valueString(GLOBAL_REMOTE_ADDR_ZOOKEEPER);
+		if (null == zkValue || "".equals(zkValue)) {
+			LinkPropertiesRequestMissingException e = new LinkPropertiesRequestMissingException();
+			e.setMessage(GLOBAL_REMOTE_ADDR_ZOOKEEPER);
 			throw e;
+		} else {
+			globalMap.put(GLOBAL_REMOTE_ADDR_ZOOKEEPER, zkValue);
 		}
 		init();
 	}
@@ -56,18 +54,19 @@ public class ZookeeperReader extends RemoteReader {
 	 */
 	private void init() {
 		Builder builder = CuratorFrameworkFactory.builder()
-				.connectString(globalRemoteAddrZookeeperValue)
+				.connectString(globalMap.get(GLOBAL_REMOTE_ADDR_ZOOKEEPER))
 				.connectionTimeoutMs(5000).sessionTimeoutMs(5000)
 				.retryPolicy(new ExponentialBackoffRetry(1000, 3));
-		builder.namespace(globalEnvValue);
+		builder.namespace(globalMap.get(GLOBAL_PROJECT_ENV));
 		cf = builder.build();
 		cf.start();
-		cf.newNamespaceAwareEnsurePath("/" + globalEnvValue);
+		cf.newNamespaceAwareEnsurePath("/" + globalMap.get(GLOBAL_PROJECT_ENV));
 	}
 
 	@Override
 	public String valueString(String propertyKey) {
-		String path = "/" + globalNameVlaue + "/" + propertyKey;
+		String path = "/" + globalMap.get(GLOBAL_PROJECT_NAME) + "/"
+				+ propertyKey;
 		try {
 			return new String(cf.getData().forPath(path), "utf-8");
 		} catch (Exception e) {

@@ -1,6 +1,7 @@
 package com.gxws.tool.link.properties.reader;
 
 import com.gxws.tool.link.properties.exception.LinkPropertiesBaseException;
+import com.gxws.tool.link.properties.exception.LinkPropertiesRequestMissingException;
 
 /**
  * 通过http方式获取远程配置信息
@@ -11,9 +12,7 @@ import com.gxws.tool.link.properties.exception.LinkPropertiesBaseException;
  */
 public class HttpReader extends RemoteReader {
 
-	private String globalRemoteAddrHttpKey = "global.remote.addr.http";
-
-	private String globalRemoteAddrHttpValue;
+	private String GLOBAL_REMOTE_ADDR_HTTP = "global.remote.addr.http";
 
 	/**
 	 * @author 朱伟亮
@@ -24,17 +23,16 @@ public class HttpReader extends RemoteReader {
 	 */
 	public HttpReader(FileReader linkFile) throws LinkPropertiesBaseException {
 		super(linkFile);
-		globalRemoteAddrHttpValue = linkFile
-				.valueString(globalRemoteAddrHttpKey);
+		String httpValue = linkFile.valueString(GLOBAL_REMOTE_ADDR_HTTP);
+		if (null == httpValue || "".equals(httpValue)) {
+			LinkPropertiesRequestMissingException e = new LinkPropertiesRequestMissingException();
+			e.setMessage(GLOBAL_REMOTE_ADDR_HTTP);
+			throw e;
+		} else {
+			globalMap.put(GLOBAL_REMOTE_ADDR_HTTP, httpValue);
+		}
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.gxws.tool.link.properties.reader.RemoteReader#valueString(java.lang
-	 * .String)
-	 */
 	@Override
 	public String valueString(String propertyKey) {
 		// TODO Auto-generated method stub
