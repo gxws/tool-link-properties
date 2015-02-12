@@ -37,7 +37,7 @@ public class ZookeeperReader extends RemoteReader {
 			throws LinkPropertiesBaseException {
 		super(linkFile);
 		globalRemoteAddrZookeeperValue = linkFile
-				.get(globalRemoteAddrZookeeperKey);
+				.valueString(globalRemoteAddrZookeeperKey);
 		LinkPropertiesRequestMissingException e = new LinkPropertiesRequestMissingException();
 		if (null == globalRemoteAddrZookeeperValue
 				|| "".equals(globalRemoteAddrZookeeperValue)) {
@@ -66,8 +66,8 @@ public class ZookeeperReader extends RemoteReader {
 	}
 
 	@Override
-	public String get(String key) {
-		String path = "/" + globalNameVlaue + "/" + key.replace(".", "/");
+	public String valueString(String propertyKey) {
+		String path = "/" + globalNameVlaue + "/" + propertyKey;
 		try {
 			return new String(cf.getData().forPath(path), "utf-8");
 		} catch (Exception e) {

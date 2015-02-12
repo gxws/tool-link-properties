@@ -15,6 +15,12 @@ import com.gxws.tool.link.properties.core.LinkPropertiesCore;
 /**
  * 以spring bean 方式读取link properties配置参数
  * 
+ * 对配置的constant class 赋值
+ * 
+ * 将读取的配置信息加入servlet context
+ * 
+ * 将读取的配置信息加入spring application context
+ * 
  * @author 朱伟亮
  * @create 2015年2月10日下午1:40:59
  *
@@ -26,17 +32,14 @@ public class LinkPropertiesBean extends PropertyPlaceholderConfigurer implements
 
 	private ServletContext servletContext;
 
-	public void initialized() {
-		LinkPropertiesCore lpc = new LinkPropertiesCore();
-		lpc.handle(constantClassnames, servletContext);
-	}
+	LinkPropertiesCore lpc = new LinkPropertiesCore();
 
 	@Override
 	protected void processProperties(
 			ConfigurableListableBeanFactory beanFactoryToProcess,
 			Properties props) throws BeansException {
+		lpc.handle(constantClassnames, props, servletContext);
 		super.processProperties(beanFactoryToProcess, props);
-		
 	}
 
 	@Override

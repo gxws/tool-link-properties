@@ -10,7 +10,7 @@ import com.gxws.tool.link.properties.exception.LinkPropertiesBaseException;
  *
  */
 public class HttpReader extends RemoteReader {
-	
+
 	private String globalRemoteAddrHttpKey = "global.remote.addr.http";
 
 	private String globalRemoteAddrHttpValue;
@@ -22,14 +22,22 @@ public class HttpReader extends RemoteReader {
 	 * @param linkFile
 	 * @throws LinkPropertiesBaseException
 	 */
-	public HttpReader(FileReader linkFile)
-			throws LinkPropertiesBaseException {
+	public HttpReader(FileReader linkFile) throws LinkPropertiesBaseException {
 		super(linkFile);
-		globalRemoteAddrHttpValue = linkFile.get(globalRemoteAddrHttpKey);
+		globalRemoteAddrHttpValue = linkFile
+				.valueString(globalRemoteAddrHttpKey);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.gxws.tool.link.properties.reader.RemoteReader#valueString(java.lang
+	 * .String)
+	 */
 	@Override
-	public String get(String key) {
+	public String valueString(String propertyKey) {
+		// TODO Auto-generated method stub
 		return null;
 	}
 

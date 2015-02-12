@@ -23,7 +23,7 @@ public class RedisReader extends RemoteReader {
 	}
 
 	@Override
-	public String get(String key) {
+	public String valueString(String propertyKey) {
 		return null;
 	}
 

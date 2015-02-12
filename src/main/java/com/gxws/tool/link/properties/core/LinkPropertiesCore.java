@@ -1,9 +1,9 @@
 package com.gxws.tool.link.properties.core;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 import java.util.Set;
 
 import javax.servlet.ServletContext;
@@ -37,23 +37,26 @@ public class LinkPropertiesCore {
 		factory = new ReaderFactory();
 	}
 
-	public void handle(String[] classnames, ServletContext servletContext) {
-		handle(Arrays.asList(classnames), servletContext);
-	}
-
-	public void handle(String classname, ServletContext servletContext) {
-		handle(new String[] { classname }, servletContext);
-	}
-
-	public void handle(List<String> classnames, ServletContext servletContext) {
+	/**
+	 * 处理静态变量
+	 * 
+	 * @author 朱伟亮
+	 * @create 2015年2月12日上午10:22:08
+	 * 
+	 * @param classnames
+	 * @param servletContext
+	 */
+	public void handle(List<String> classnames, Properties props,
+			ServletContext servletContext) {
 		Set<Class<?>> classSet = ct.forClasses(classnames);
 		Set<Property> propertySet = ct.getProperty(classSet);
 		Map<String, String> valueMap = new HashMap<>();
 		Map<String, String> contextMap = new HashMap<>();
 		for (Property p : propertySet) {
 			try {
-				Reader link = factory.get(p.getType());
-				String value = link.get(p.getPropertyKey());
+				Reader reader = factory.getReader(p.getType());
+				String value = reader.valueString(p.getPropertyKey());
+				props.put(p.getPropertyKey(), value);
 				valueMap.put(p.getFullName(), value);
 				if (p.isContextScope()) {
 					contextMap.put(p.getFieldName(), value);

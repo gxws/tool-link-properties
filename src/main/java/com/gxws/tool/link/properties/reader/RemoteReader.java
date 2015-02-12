@@ -22,8 +22,8 @@ public abstract class RemoteReader implements Reader {
 
 	public RemoteReader(FileReader linkFile)
 			throws LinkPropertiesBaseException {
-		globalEnvValue = linkFile.get(globalEnvKey);
-		globalNameVlaue = linkFile.get(globalNameKey);
+		globalEnvValue = linkFile.valueString(globalEnvKey);
+		globalNameVlaue = linkFile.valueString(globalNameKey);
 		LinkPropertiesRequestMissingException e = new LinkPropertiesRequestMissingException();
 		if (null == globalEnvValue || "".equals(globalEnvValue)) {
 			e.setMessage(globalEnvKey);
@@ -35,6 +35,6 @@ public abstract class RemoteReader implements Reader {
 	}
 
 	@Override
-	public abstract String get(String key);
+	public abstract String valueString(String propertyKey);
 	
 }

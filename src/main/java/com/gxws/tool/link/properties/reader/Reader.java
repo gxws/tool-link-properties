@@ -19,5 +19,5 @@ public interface Reader {
 	 * @return
 	 * @throws LinkPropertiesBaseException
 	 */
-	public String get(String key) throws LinkPropertiesBaseException;
+	public String valueString(String key) throws LinkPropertiesBaseException;
 }

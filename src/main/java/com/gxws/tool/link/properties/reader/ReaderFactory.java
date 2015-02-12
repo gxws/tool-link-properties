@@ -11,37 +11,37 @@ import com.gxws.tool.link.properties.exception.LinkPropertiesBaseException;
  */
 public class ReaderFactory {
 
-	private Reader fileGet;
+	private Reader fileReader;
 
-	private Reader httpGet;
+	private Reader httpReader;
 
-	private Reader zkGet;
+	private Reader zookeeperReader;
 
-	private Reader redisGet;
+	private Reader redisReader;
 
-	public Reader get(ReaderType type)
+	public Reader getReader(ReaderType type)
 			throws LinkPropertiesBaseException {
-		if (null == fileGet) {
-			fileGet = new FileReader();
+		if (null == fileReader) {
+			fileReader = new FileReader();
 		}
 		switch (type.name()) {
 		case "HTTP":
-			if (null == httpGet) {
-				httpGet = new HttpReader((FileReader) fileGet);
+			if (null == httpReader) {
+				httpReader = new HttpReader((FileReader) fileReader);
 			}
-			return httpGet;
+			return httpReader;
 		case "ZK":
-			if (null == zkGet) {
-				zkGet = new ZookeeperReader((FileReader) fileGet);
+			if (null == zookeeperReader) {
+				zookeeperReader = new ZookeeperReader((FileReader) fileReader);
 			}
-			return zkGet;
+			return zookeeperReader;
 		case "REDIS":
-			if (null == redisGet) {
-				redisGet = new RedisReader((FileReader) fileGet);
+			if (null == redisReader) {
+				redisReader = new RedisReader((FileReader) fileReader);
 			}
-			return redisGet;
+			return redisReader;
 		default:
-			return fileGet;
+			return fileReader;
 		}
 	}
 

@@ -7,7 +7,7 @@ package com.gxws.tool.link.properties.exception;
  * @create 2015年2月10日下午2:46:19
  *
  */
-public class LinkPropertiesNameException extends LinkPropertiesBaseException {
+public class LinkPropertiesKeyException extends LinkPropertiesBaseException {
 
 	private static final long serialVersionUID = 3612960424311168834L;
 

@@ -3,7 +3,7 @@ package com.gxws.tool.link.properties.reader;
 import java.util.ResourceBundle;
 
 import com.gxws.tool.link.properties.exception.LinkPropertiesBaseException;
-import com.gxws.tool.link.properties.exception.LinkPropertiesNameException;
+import com.gxws.tool.link.properties.exception.LinkPropertiesKeyException;
 import com.gxws.tool.link.properties.exception.LinkPropertiesValueException;
 
 /**
@@ -20,7 +20,8 @@ public class FileReader implements Reader {
 	private String linkFileName = "link";
 
 	@Override
-	public String get(String key) throws LinkPropertiesBaseException {
+	public String valueString(String propertyKey)
+			throws LinkPropertiesBaseException {
 		if (null == linkFile) {
 			try {
 				linkFile = ResourceBundle.getBundle(linkFileName);
@@ -31,23 +32,24 @@ public class FileReader implements Reader {
 				throw e;
 			}
 		}
-		if (key == null) {
-			LinkPropertiesNameException e = new LinkPropertiesNameException();
-			e.setMessage("key is null");
+		if (propertyKey == null) {
+			LinkPropertiesKeyException e = new LinkPropertiesKeyException();
+			e.setMessage("property key is null");
 			throw e;
 		} else {
-			String name = key.trim();
-			if ("".equals(name)) {
-				LinkPropertiesNameException e = new LinkPropertiesNameException();
-				e.setMessage("key is not null but empty");
+			String k = propertyKey.trim();
+			if ("".equals(k)) {
+				LinkPropertiesKeyException e = new LinkPropertiesKeyException();
+				e.setMessage("property key is not null but empty");
 				throw e;
 			} else {
 				try {
-					return linkFile.getString(name);
+					return linkFile.getString(k);
 				} catch (Exception e1) {
 					LinkPropertiesValueException e = new LinkPropertiesValueException();
 					e.setStackTrace(e1.getStackTrace());
-					e.setMessage("key '"+name+"' value reading exception , probable not exist");
+					e.setMessage("property key '" + k
+							+ "' value reading exception , probable not exist");
 					throw e;
 				}
 			}
