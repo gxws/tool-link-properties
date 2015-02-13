@@ -59,13 +59,16 @@ public class LinkPropertiesCore {
 		for (Property p : propertySet) {
 			try {
 				Reader reader = factory.getReader(p);
+				if (null == reader) {
+					continue;
+				}
 				String value = reader.valueString(p.getPropertyKey());
 				if (null != value) {
 					props.put(p.getPropertyKey(), value);
-					valueMap.put(p.getFullName(), value);
-					if (p.isContextScope()) {
-						contextMap.put(p.getFieldName(), value);
-					}
+				}
+				valueMap.put(p.getFullName(), value);
+				if (p.isContextScope()) {
+					contextMap.put(p.getFieldName(), value);
 				}
 			} catch (LinkPropertiesBaseException e) {
 				log.error(e.getMessage(), e);
