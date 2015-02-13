@@ -1,12 +1,15 @@
 package com.gxws.tool.link.properties.reader;
 
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
+
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.CuratorFrameworkFactory;
 import org.apache.curator.framework.CuratorFrameworkFactory.Builder;
 import org.apache.curator.retry.ExponentialBackoffRetry;
 import org.apache.log4j.Logger;
 
-import com.gxws.tool.link.properties.exception.LinkPropertiesBaseException;
 import com.gxws.tool.link.properties.exception.LinkPropertiesRequestMissingException;
 
 /**
@@ -16,9 +19,11 @@ import com.gxws.tool.link.properties.exception.LinkPropertiesRequestMissingExcep
  * @create 2015年2月10日下午2:37:19
  *
  */
-public class ZookeeperReader implements Reader {
+public class ZookeeperReader implements RemoteReader {
 
 	private Logger log = Logger.getLogger(getClass());
+
+	private final String NAMESPACE = "link.properties";
 
 	private final String GLOBAL_REMOTE_ADDR_ZOOKEEPER = "global.remote.addr.zookeeper";
 
@@ -29,18 +34,19 @@ public class ZookeeperReader implements Reader {
 	 * @create 2015年2月10日下午3:17:03
 	 * 
 	 * @param linkFile
-	 * @throws LinkPropertiesBaseException
+	 * @throws LinkPropertiesRequestMissingException
 	 */
 	public ZookeeperReader(FileReader linkFile)
-			throws LinkPropertiesBaseException {
-		String zkValue = linkFile.valueString(GLOBAL_REMOTE_ADDR_ZOOKEEPER);
-		if (null == zkValue || "".equals(zkValue)) {
-			LinkPropertiesRequestMissingException e = new LinkPropertiesRequestMissingException();
-			e.setMessage(GLOBAL_REMOTE_ADDR_ZOOKEEPER);
-			throw e;
-		} else {
+			throws LinkPropertiesRequestMissingException {
+		try {
+			String zkValue = linkFile.valueString(GLOBAL_REMOTE_ADDR_ZOOKEEPER);
 			ReaderFactory.GLOBAL_REMOTE_MAP.put(GLOBAL_REMOTE_ADDR_ZOOKEEPER,
 					zkValue);
+		} catch (Exception e1) {
+			LinkPropertiesRequestMissingException e = new LinkPropertiesRequestMissingException();
+			e.setMessage(GLOBAL_REMOTE_ADDR_ZOOKEEPER);
+			e.setStackTrace(e.getStackTrace());
+			throw e;
 		}
 		init();
 	}
@@ -60,18 +66,18 @@ public class ZookeeperReader implements Reader {
 								.get(GLOBAL_REMOTE_ADDR_ZOOKEEPER))
 				.connectionTimeoutMs(5000).sessionTimeoutMs(5000)
 				.retryPolicy(new ExponentialBackoffRetry(1000, 3));
-		builder.namespace(ReaderFactory.GLOBAL_REMOTE_MAP
-				.get(ReaderFactory.GLOBAL_PROJECT_ENV));
+		builder.namespace(NAMESPACE);
 		cf = builder.build();
 		cf.start();
-		cf.newNamespaceAwareEnsurePath("/"
-				+ ReaderFactory.GLOBAL_REMOTE_MAP
-						.get(ReaderFactory.GLOBAL_PROJECT_ENV));
+		cf.newNamespaceAwareEnsurePath("/" + NAMESPACE);
 	}
 
 	@Override
 	public String valueString(String propertyKey) {
 		String path = "/"
+				+ ReaderFactory.GLOBAL_REMOTE_MAP
+						.get(ReaderFactory.GLOBAL_PROJECT_ENV)
+				+ "/"
 				+ ReaderFactory.GLOBAL_REMOTE_MAP
 						.get(ReaderFactory.GLOBAL_PROJECT_NAME) + "/"
 				+ propertyKey;
@@ -81,6 +87,12 @@ public class ZookeeperReader implements Reader {
 			log.error(e.getMessage(), e);
 		}
 		return null;
+	}
+
+	@Override
+	public Set<String> ignoreSet() {
+		return new HashSet<>(
+				Arrays.asList(new String[] { GLOBAL_REMOTE_ADDR_ZOOKEEPER }));
 	}
 
 }

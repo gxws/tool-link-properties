@@ -1,5 +1,9 @@
 package com.gxws.tool.link.properties.reader;
 
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
+
 import com.gxws.tool.link.properties.exception.LinkPropertiesBaseException;
 import com.gxws.tool.link.properties.exception.LinkPropertiesRequestMissingException;
 
@@ -10,7 +14,7 @@ import com.gxws.tool.link.properties.exception.LinkPropertiesRequestMissingExcep
  * @create 2015年2月10日下午3:15:09
  *
  */
-public class HttpReader implements Reader {
+public class HttpReader implements RemoteReader {
 
 	private final String GLOBAL_REMOTE_ADDR_HTTP = "global.remote.addr.http";
 
@@ -19,17 +23,19 @@ public class HttpReader implements Reader {
 	 * @create 2015年2月10日下午3:17:49
 	 * 
 	 * @param linkFile
-	 * @throws LinkPropertiesBaseException
+	 * @throws LinkPropertiesRequestMissingException
 	 */
-	public HttpReader(FileReader linkFile) throws LinkPropertiesBaseException {
-		String httpValue = linkFile.valueString(GLOBAL_REMOTE_ADDR_HTTP);
-		if (null == httpValue || "".equals(httpValue)) {
-			LinkPropertiesRequestMissingException e = new LinkPropertiesRequestMissingException();
-			e.setMessage(GLOBAL_REMOTE_ADDR_HTTP);
-			throw e;
-		} else {
+	public HttpReader(FileReader linkFile)
+			throws LinkPropertiesRequestMissingException {
+		try {
+			String httpValue = linkFile.valueString(GLOBAL_REMOTE_ADDR_HTTP);
 			ReaderFactory.GLOBAL_REMOTE_MAP.put(GLOBAL_REMOTE_ADDR_HTTP,
 					httpValue);
+		} catch (LinkPropertiesBaseException e1) {
+			LinkPropertiesRequestMissingException e = new LinkPropertiesRequestMissingException();
+			e.setMessage(GLOBAL_REMOTE_ADDR_HTTP);
+			e.setStackTrace(e1.getStackTrace());
+			throw e;
 		}
 	}
 
@@ -37,6 +43,12 @@ public class HttpReader implements Reader {
 	public String valueString(String propertyKey) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public Set<String> ignoreSet() {
+		return new HashSet<>(
+				Arrays.asList(new String[] { GLOBAL_REMOTE_ADDR_HTTP }));
 	}
 
 }

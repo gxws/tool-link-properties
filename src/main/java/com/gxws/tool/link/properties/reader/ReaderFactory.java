@@ -10,6 +10,7 @@ import org.apache.log4j.Logger;
 
 import com.gxws.tool.link.properties.exception.LinkPropertiesBaseException;
 import com.gxws.tool.link.properties.exception.LinkPropertiesRequestMissingException;
+import com.gxws.tool.link.properties.info.Property;
 
 /**
  * 获取配置读取接口
@@ -27,6 +28,10 @@ public class ReaderFactory {
 	public final static String GLOBAL_PROJECT_ENV = "global.project.env";
 
 	public final static String GLOBAL_PROJECT_NAME = "global.project.name";
+
+	private Set<String> localPropertyKeySet = new HashSet<>(
+			Arrays.asList(new String[] { GLOBAL_PROJECT_ENV,
+					GLOBAL_PROJECT_NAME }));
 
 	private Set<String> specifiedEnvSet = new HashSet<>(
 			Arrays.asList(new String[] { "dev", "test", "real" }));
@@ -56,27 +61,37 @@ public class ReaderFactory {
 		}
 		try {
 			httpReader = new HttpReader(fileReader);
+			localPropertyKeySet.addAll(httpReader.ignoreSet());
 		} catch (LinkPropertiesRequestMissingException e2) {
 			log.warn(e2.getMessage());
+			httpReader = null;
 		}
 		try {
 			zookeeperReader = new ZookeeperReader(fileReader);
+			localPropertyKeySet.addAll(zookeeperReader.ignoreSet());
 		} catch (LinkPropertiesRequestMissingException e2) {
 			log.warn(e2.getMessage());
+			zookeeperReader = null;
 		}
 		try {
 			redisReader = new RedisReader(fileReader);
-		} catch (Exception e2) {
+			localPropertyKeySet.addAll(redisReader.ignoreSet());
+		} catch (LinkPropertiesRequestMissingException e2) {
 			log.warn(e2.getMessage());
+			redisReader = null;
 		}
 	}
 
-	public Reader getReader(ReaderType type) throws LinkPropertiesBaseException {
+	public Reader getReader(Property p) throws LinkPropertiesBaseException {
 		String env = GLOBAL_REMOTE_MAP.get(GLOBAL_PROJECT_ENV);
 		if (specifiedEnvSet.contains(env)) {
-			return specified();
+			if (localPropertyKeySet.contains(p.getPropertyKey())) {
+				return fileReader;
+			} else {
+				return specified();
+			}
 		} else {
-			return other(type);
+			return other(p.getType());
 		}
 	}
 
@@ -105,4 +120,7 @@ public class ReaderFactory {
 		}
 	}
 
+	public Set<String> getLocalPropertyKeySet() {
+		return localPropertyKeySet;
+	}
 }
