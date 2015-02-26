@@ -6,7 +6,8 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.gxws.tool.link.properties.exception.LinkPropertiesBaseException;
 import com.gxws.tool.link.properties.exception.LinkPropertiesRequestMissingException;
@@ -21,7 +22,7 @@ import com.gxws.tool.link.properties.info.Property;
  */
 public class ReaderFactory {
 
-	private Logger log = Logger.getLogger(getClass());
+	private Logger log = LoggerFactory.getLogger(getClass());
 
 	public static Map<String, String> GLOBAL_REMOTE_MAP = new HashMap<>();
 

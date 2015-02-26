@@ -7,7 +7,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.gxws.tool.link.properties.annotation.LinkProperties;
 import com.gxws.tool.link.properties.info.Property;
@@ -20,7 +21,7 @@ import com.gxws.tool.link.properties.info.Property;
  *
  */
 public class ClassReflect implements ClassTool {
-	private Logger log = Logger.getLogger(getClass());
+	private Logger log = LoggerFactory.getLogger(getClass());
 
 	@Override
 	public Set<Class<?>> forClasses(List<String> classnames) {

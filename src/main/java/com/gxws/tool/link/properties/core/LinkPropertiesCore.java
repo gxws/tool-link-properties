@@ -8,7 +8,8 @@ import java.util.Set;
 
 import javax.servlet.ServletContext;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.gxws.tool.link.properties.classtool.ClassReflect;
 import com.gxws.tool.link.properties.classtool.ClassTool;
@@ -26,7 +27,7 @@ import com.gxws.tool.link.properties.reader.ReaderFactory;
  */
 public class LinkPropertiesCore {
 
-	private Logger log = Logger.getLogger(getClass());
+	private Logger log = LoggerFactory.getLogger(getClass());
 
 	private ClassTool ct;
 

@@ -8,7 +8,8 @@ import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.CuratorFrameworkFactory;
 import org.apache.curator.framework.CuratorFrameworkFactory.Builder;
 import org.apache.curator.retry.ExponentialBackoffRetry;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.gxws.tool.link.properties.exception.LinkPropertiesRequestMissingException;
 
@@ -21,7 +22,7 @@ import com.gxws.tool.link.properties.exception.LinkPropertiesRequestMissingExcep
  */
 public class ZookeeperReader implements RemoteReader {
 
-	private Logger log = Logger.getLogger(getClass());
+	private Logger log = LoggerFactory.getLogger(getClass());
 
 	private final String NAMESPACE = "link.properties";
 
