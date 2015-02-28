@@ -1,5 +1,6 @@
 package com.gxws.tool.link.properties.core;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -35,7 +36,7 @@ public class LinkPropertiesCore {
 
 	private final Set<String> ENV_SET = new HashSet<>(
 			Arrays.asList(new String[] { "dev", "test", "real" }));
-	
+
 	private final Reader DEFAULT_REMOTE_READER = new ZookeeperReader();
 	private final Reader DEFAULT_LOCAL_READER = new FileReader();
 
@@ -50,13 +51,15 @@ public class LinkPropertiesCore {
 	 */
 	public void handle(List<String> classnames, Properties props,
 			ServletContext servletContext) {
-		List<Class<?>> classList = ct.forClasses(classnames);
-		classList.set(0, LinkPropertiesConstant.class);
+		List<Class<?>> classList = new ArrayList<>();
+		classList.add(LinkPropertiesConstant.class);
+		classList.addAll(ct.forClasses(classnames));
+		Reader reader;
 		for (Class<?> cls : classList) {
-			List<Property> propertyList = ct.getProperty(cls);
-			for (Property p : propertyList) {
-				Reader reader;
-				if (ENV_SET.contains(LinkPropertiesConstant.GLOBAL_PROJECT_ENV)) {
+			for (Property p : ct.getProperty(cls)) {
+				if (ENV_SET.contains(LinkPropertiesConstant.GLOBAL_PROJECT_ENV)
+						&& !LinkPropertiesConstant.GLOBAL_PROPERTY_MAP()
+								.keySet().contains(p.getPropertyKey())) {
 					reader = DEFAULT_REMOTE_READER;
 				} else {
 					reader = DEFAULT_LOCAL_READER;

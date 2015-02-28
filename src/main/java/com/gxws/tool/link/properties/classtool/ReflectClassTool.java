@@ -4,7 +4,6 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -65,14 +64,6 @@ public class ReflectClassTool implements ClassTool {
 			}
 		}
 		return list;
-	}
-
-	@Override
-	public void setProperty(Class<?> cls, Map<String, String> map) {
-		for (String key : map.keySet()) {
-			String fieldName = key.substring(key.lastIndexOf(".") + 1);
-			setProperty(cls, fieldName, map.get(key));
-		}
 	}
 
 	@Override

@@ -1,7 +1,6 @@
 package com.gxws.tool.link.properties.classtool;
 
 import java.util.List;
-import java.util.Map;
 
 import com.gxws.tool.link.properties.info.Property;
 
@@ -35,18 +34,6 @@ public interface ClassTool {
 	 * @return
 	 */
 	public List<Property> getProperty(Class<?> cls);
-
-	/**
-	 * 给配置类的属性设置值
-	 * 
-	 * @author 朱伟亮
-	 * @create 2015年2月28日上午11:35:43
-	 * 
-	 * @param cls
-	 * @param map
-	 */
-	@Deprecated
-	public void setProperty(Class<?> cls, Map<String, String> map);
 
 	/**
 	 * 给配置类的属性设置值

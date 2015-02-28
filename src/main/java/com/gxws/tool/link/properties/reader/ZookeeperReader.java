@@ -68,8 +68,8 @@ public class ZookeeperReader implements RemoteReader {
 
 	private String zookeeperAddr() {
 		String addr;
-		addr = LinkPropertiesConstant.GLOBAL_PROPERTY_MAP
-				.get(PROPERTY_KEY_ADDR_ZOOKEEPER);
+		addr = LinkPropertiesConstant.GLOBAL_PROPERTY_MAP().get(
+				PROPERTY_KEY_ADDR_ZOOKEEPER);
 		if (null == addr || "".equals(addr)) {
 			addr = DEFAULT_ADDR_ZOOKEEPER;
 		}

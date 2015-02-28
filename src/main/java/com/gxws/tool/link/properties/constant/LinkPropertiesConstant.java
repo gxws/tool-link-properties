@@ -16,10 +16,19 @@ public class LinkPropertiesConstant {
 
 	@LinkProperties(value = "global.project.name")
 	public static String GLOBAL_PROJECT_NAME = "";
-	
+
 	@LinkProperties(value = "global.project.env")
 	public static String GLOBAL_PROJECT_ENV = "";
 
-	public static Map<String, String> GLOBAL_PROPERTY_MAP = new HashMap<>();
-	
+	private static Map<String, String> map;
+
+	public static Map<String, String> GLOBAL_PROPERTY_MAP() {
+		if (null == map) {
+			map = new HashMap<>();
+			map.put("global.project.name", "");
+			map.put("global.project.env", "");
+		}
+		return map;
+	}
+
 }
