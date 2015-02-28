@@ -1,17 +1,25 @@
 package com.gxws.tool.link.properties.core;
 
+import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Properties;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.servlet.ServletContext;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.gxws.tool.common.constant.LocalConstant;
+import com.gxws.tool.common.constant.ProjectConstant;
 import com.gxws.tool.link.properties.classtool.ReflectClassTool;
 import com.gxws.tool.link.properties.classtool.ClassTool;
 import com.gxws.tool.link.properties.constant.LinkPropertiesConstant;
@@ -79,5 +87,38 @@ public class LinkPropertiesCore {
 				}
 			}
 		}
+		ProjectConstant.NAME = LinkPropertiesConstant.GLOBAL_PROJECT_NAME;
+		ProjectConstant.ENV = LinkPropertiesConstant.GLOBAL_PROJECT_ENV;
+		LocalConstant.IP = ips();
+	}
+
+	private String ips() {
+		Enumeration<NetworkInterface> netInterfaces;
+		Pattern p = Pattern
+				.compile("^((2[0-4]\\d|25[0-5]|[01]?\\d\\d?)\\.){3}(2[0-4]\\d|25[0-5]|[01]?\\d\\d?)$");
+		Matcher m = null;
+		String ip = null;
+		StringBuffer sb = new StringBuffer();
+		try {
+			netInterfaces = NetworkInterface.getNetworkInterfaces();
+			while (netInterfaces.hasMoreElements()) {
+				NetworkInterface nif = netInterfaces.nextElement();
+				Enumeration<InetAddress> iparray = nif.getInetAddresses();
+				while (iparray.hasMoreElements()) {
+					ip = iparray.nextElement().getHostAddress();
+					m = p.matcher(ip);
+					if (m.matches() && !ip.startsWith("127")) {
+						sb.append("," + ip);
+					}
+				}
+			}
+			if (0 == sb.length()) {
+				throw new Exception();
+			}
+		} catch (Exception e) {
+			log.error("can't read local ip address", e);
+			return "";
+		}
+		return sb.substring(1);
 	}
 }
