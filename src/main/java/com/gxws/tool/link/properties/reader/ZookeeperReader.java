@@ -11,7 +11,7 @@ import org.apache.curator.retry.ExponentialBackoffRetry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.gxws.tool.link.properties.exception.LinkPropertiesRequestMissingException;
+import com.gxws.tool.link.properties.constant.LinkPropertiesConstant;
 
 /**
  * 通过zookeeper获取配置信息
@@ -26,46 +26,23 @@ public class ZookeeperReader implements RemoteReader {
 
 	private final String NAMESPACE = "link.properties";
 
-	private final String GLOBAL_REMOTE_ADDR_ZOOKEEPER = "global.remote.addr.zookeeper";
+	private final String DEFAULT_ADDR_ZOOKEEPER = "zookeeper.gxwsxx.com:17000";
+
+	private final String PROPERTY_KEY_ADDR_ZOOKEEPER = "global.remote.addr.zookeeper";
 
 	private CuratorFramework cf;
 
 	/**
-	 * @author 朱伟亮
-	 * @create 2015年2月10日下午3:17:03
-	 * 
-	 * @param linkFile
-	 * @throws LinkPropertiesRequestMissingException
-	 */
-	public ZookeeperReader(FileReader linkFile)
-			throws LinkPropertiesRequestMissingException {
-		try {
-			String zkValue = linkFile.valueString(GLOBAL_REMOTE_ADDR_ZOOKEEPER);
-			ReaderFactory.GLOBAL_REMOTE_MAP.put(GLOBAL_REMOTE_ADDR_ZOOKEEPER,
-					zkValue);
-		} catch (Exception e1) {
-			LinkPropertiesRequestMissingException e = new LinkPropertiesRequestMissingException();
-			e.setMessage(GLOBAL_REMOTE_ADDR_ZOOKEEPER);
-			e.setStackTrace(e.getStackTrace());
-			throw e;
-		}
-		init();
-	}
-
-	/**
-	 * 初始化zk客户端
 	 * 
 	 * @author 朱伟亮
-	 * @create 2015年2月10日下午3:56:48
+	 * @create 2015年2月28日上午9:33:45
 	 *
 	 */
-	private void init() {
-		Builder builder = CuratorFrameworkFactory
-				.builder()
-				.connectString(
-						ReaderFactory.GLOBAL_REMOTE_MAP
-								.get(GLOBAL_REMOTE_ADDR_ZOOKEEPER))
-				.connectionTimeoutMs(5000).sessionTimeoutMs(5000)
+	public void init() {
+		String zkAddr = zookeeperAddr();
+		Builder builder = CuratorFrameworkFactory.builder()
+				.connectString(zkAddr).connectionTimeoutMs(5000)
+				.sessionTimeoutMs(5000)
 				.retryPolicy(new ExponentialBackoffRetry(1000, 3));
 		builder.namespace(NAMESPACE);
 		cf = builder.build();
@@ -75,12 +52,11 @@ public class ZookeeperReader implements RemoteReader {
 
 	@Override
 	public String valueString(String propertyKey) {
-		String path = "/"
-				+ ReaderFactory.GLOBAL_REMOTE_MAP
-						.get(ReaderFactory.GLOBAL_PROJECT_ENV)
-				+ "/"
-				+ ReaderFactory.GLOBAL_REMOTE_MAP
-						.get(ReaderFactory.GLOBAL_PROJECT_NAME) + "/"
+		if (null == cf) {
+			init();
+		}
+		String path = "/" + LinkPropertiesConstant.GLOBAL_PROJECT_ENV + "/"
+				+ LinkPropertiesConstant.GLOBAL_PROJECT_NAME + "/"
 				+ propertyKey;
 		try {
 			return new String(cf.getData().forPath(path), "utf-8");
@@ -90,10 +66,19 @@ public class ZookeeperReader implements RemoteReader {
 		return null;
 	}
 
-	@Override
-	public Set<String> ignoreSet() {
-		return new HashSet<>(
-				Arrays.asList(new String[] { GLOBAL_REMOTE_ADDR_ZOOKEEPER }));
+	private String zookeeperAddr() {
+		String addr;
+		addr = LinkPropertiesConstant.GLOBAL_PROPERTY_MAP
+				.get(PROPERTY_KEY_ADDR_ZOOKEEPER);
+		if (null == addr || "".equals(addr)) {
+			addr = DEFAULT_ADDR_ZOOKEEPER;
+		}
+		return addr;
 	}
 
+	@Override
+	public Set<String> localPropertyKeySet() {
+		return new HashSet<>(
+				Arrays.asList(new String[] { PROPERTY_KEY_ADDR_ZOOKEEPER }));
+	}
 }

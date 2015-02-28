@@ -5,7 +5,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 import com.gxws.tool.link.properties.exception.LinkPropertiesBaseException;
-import com.gxws.tool.link.properties.exception.LinkPropertiesRequestMissingException;
 
 /**
  * @author 朱伟亮
@@ -14,7 +13,7 @@ import com.gxws.tool.link.properties.exception.LinkPropertiesRequestMissingExcep
  */
 public class RedisReader implements RemoteReader {
 
-	private final String GLOBAL_REMOTE_ADDR_REDIS = "global.remote.addr.redis";
+	private final String PROPERTY_KEY_ADDR_REDIS = "global.remote.addr.redis";
 
 	/**
 	 * @author 朱伟亮
@@ -23,29 +22,29 @@ public class RedisReader implements RemoteReader {
 	 * @param linkFile
 	 * @throws LinkPropertiesBaseException
 	 */
-	public RedisReader(FileReader linkFile)
-			throws LinkPropertiesRequestMissingException {
-		try {
-			String redisValue = linkFile.valueString(GLOBAL_REMOTE_ADDR_REDIS);
-			ReaderFactory.GLOBAL_REMOTE_MAP.put(GLOBAL_REMOTE_ADDR_REDIS,
-					redisValue);
-		} catch (LinkPropertiesBaseException e1) {
-			LinkPropertiesRequestMissingException e = new LinkPropertiesRequestMissingException();
-			e.setMessage(GLOBAL_REMOTE_ADDR_REDIS);
-			e.setStackTrace(e1.getStackTrace());
-			throw e;
-		}
+	public RedisReader() {
+		// try {
+		// String redisValue = linkFile.valueString(GLOBAL_REMOTE_ADDR_REDIS);
+		// ReaderFactory.GLOBAL_PROPERTY_MAP.put(GLOBAL_REMOTE_ADDR_REDIS,
+		// redisAddr);
+		// } catch (LinkPropertiesBaseException e1) {
+		// LinkPropertiesRequestMissingException e = new
+		// LinkPropertiesRequestMissingException();
+		// e.setMessage(GLOBAL_REMOTE_ADDR_REDIS);
+		// e.setStackTrace(e1.getStackTrace());
+		// throw e;
+		// }
 	}
 
 	@Override
 	public String valueString(String propertyKey) {
-		return null;
+		return "";
 	}
 
 	@Override
-	public Set<String> ignoreSet() {
+	public Set<String> localPropertyKeySet() {
 		return new HashSet<>(
-				Arrays.asList(new String[] { GLOBAL_REMOTE_ADDR_REDIS }));
+				Arrays.asList(new String[] { PROPERTY_KEY_ADDR_REDIS }));
 	}
 
 }

@@ -1,6 +1,7 @@
 package com.gxws.tool.link.properties.reader;
 
 import java.util.ResourceBundle;
+import java.util.Set;
 
 import com.gxws.tool.link.properties.exception.LinkPropertiesBaseException;
 import com.gxws.tool.link.properties.exception.LinkPropertiesKeyException;
@@ -17,17 +18,17 @@ public class FileReader implements Reader {
 
 	private ResourceBundle linkFile = null;
 
-	private String linkFileName = "link";
+	private final String LINK_FILE_NAME = "link";
 
 	@Override
 	public String valueString(String propertyKey)
 			throws LinkPropertiesBaseException {
 		if (null == linkFile) {
 			try {
-				linkFile = ResourceBundle.getBundle(linkFileName);
+				linkFile = ResourceBundle.getBundle(LINK_FILE_NAME);
 			} catch (Exception e1) {
 				LinkPropertiesBaseException e = new LinkPropertiesBaseException();
-				e.setMessage(linkFileName + ".properties loading");
+				e.setMessage(LINK_FILE_NAME + ".properties loading");
 				e.setStackTrace(e1.getStackTrace());
 				throw e;
 			}
@@ -54,6 +55,11 @@ public class FileReader implements Reader {
 				}
 			}
 		}
+	}
+
+	@Override
+	public Set<String> localPropertyKeySet() {
+		return null;
 	}
 
 }

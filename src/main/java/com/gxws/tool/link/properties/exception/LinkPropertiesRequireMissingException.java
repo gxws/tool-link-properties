@@ -7,13 +7,12 @@ package com.gxws.tool.link.properties.exception;
  * @create 2015年2月10日下午3:37:30
  *
  */
-public class LinkPropertiesRequestMissingException extends
+public class LinkPropertiesRequireMissingException extends
 		LinkPropertiesBaseException {
 
 	private static final long serialVersionUID = 8536271162856438688L;
 
-	@Override
-	public void setMessage(String message) {
+	public LinkPropertiesRequireMissingException(String message) {
 		super.setMessage("attribute '" + message
 				+ "' missing in file link.properties");
 	}

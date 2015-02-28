@@ -1,8 +1,8 @@
 package com.gxws.tool.link.properties.core;
 
-import java.util.HashMap;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 
@@ -11,12 +11,14 @@ import javax.servlet.ServletContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.gxws.tool.link.properties.classtool.ClassReflect;
+import com.gxws.tool.link.properties.classtool.ReflectClassTool;
 import com.gxws.tool.link.properties.classtool.ClassTool;
+import com.gxws.tool.link.properties.constant.LinkPropertiesConstant;
 import com.gxws.tool.link.properties.exception.LinkPropertiesBaseException;
 import com.gxws.tool.link.properties.info.Property;
+import com.gxws.tool.link.properties.reader.FileReader;
 import com.gxws.tool.link.properties.reader.Reader;
-import com.gxws.tool.link.properties.reader.ReaderFactory;
+import com.gxws.tool.link.properties.reader.ZookeeperReader;
 
 /**
  * 获取相应配置类，读取配置信息，并写入相应的变量
@@ -29,18 +31,13 @@ public class LinkPropertiesCore {
 
 	private Logger log = LoggerFactory.getLogger(getClass());
 
-	private ClassTool ct;
+	private ClassTool ct = new ReflectClassTool();
 
-	private ReaderFactory factory;
-
-	public LinkPropertiesCore() {
-		ct = new ClassReflect();
-		try {
-			factory = new ReaderFactory();
-		} catch (LinkPropertiesBaseException e) {
-			log.error(e.getMessage(), e);
-		}
-	}
+	private final Set<String> ENV_SET = new HashSet<>(
+			Arrays.asList(new String[] { "dev", "test", "real" }));
+	
+	private final Reader DEFAULT_REMOTE_READER = new ZookeeperReader();
+	private final Reader DEFAULT_LOCAL_READER = new FileReader();
 
 	/**
 	 * 处理静态变量
@@ -53,49 +50,31 @@ public class LinkPropertiesCore {
 	 */
 	public void handle(List<String> classnames, Properties props,
 			ServletContext servletContext) {
-		Set<Class<?>> classSet = ct.forClasses(classnames);
-		Set<Property> propertySet = ct.getProperty(classSet);
-		Map<String, String> valueMap = new HashMap<>();
-		Map<String, String> contextMap = new HashMap<>();
-		for (Property p : propertySet) {
-			try {
-				Reader reader = factory.getReader(p);
-				if (null == reader) {
+		List<Class<?>> classList = ct.forClasses(classnames);
+		classList.set(0, LinkPropertiesConstant.class);
+		for (Class<?> cls : classList) {
+			List<Property> propertyList = ct.getProperty(cls);
+			for (Property p : propertyList) {
+				Reader reader;
+				if (ENV_SET.contains(LinkPropertiesConstant.GLOBAL_PROJECT_ENV)) {
+					reader = DEFAULT_REMOTE_READER;
+				} else {
+					reader = DEFAULT_LOCAL_READER;
+				}
+				try {
+					String value = reader.valueString(p.getPropertyKey());
+					if (null != value) {
+						props.put(p.getPropertyKey(), value);
+						ct.setProperty(cls, p.getFieldName(), value);
+					}
+					if (p.isContextScope()) {
+						servletContext.setAttribute(p.getFieldName(), value);
+					}
+				} catch (LinkPropertiesBaseException e) {
+					log.error(e.getMessage(), e);
 					continue;
 				}
-				String value = reader.valueString(p.getPropertyKey());
-				if (null != value) {
-					props.put(p.getPropertyKey(), value);
-				}
-				valueMap.put(p.getFullName(), value);
-				if (p.isContextScope()) {
-					contextMap.put(p.getFieldName(), value);
-				}
-			} catch (LinkPropertiesBaseException e) {
-				log.error(e.getMessage(), e);
-				continue;
-			}
-		}
-		ct.setProperty(classSet, valueMap);
-		servletContextAttribute(servletContext, contextMap);
-	}
-
-	/**
-	 * 将变量放置到servletContext
-	 * 
-	 * @author 朱伟亮
-	 * @create 2015年2月11日上午9:36:39
-	 * 
-	 * @param servletContext
-	 * @param contextMap
-	 */
-	private void servletContextAttribute(ServletContext servletContext,
-			Map<String, String> contextMap) {
-		if (null != contextMap && 0 != contextMap.size()) {
-			for (String key : contextMap.keySet()) {
-				servletContext.setAttribute(key, contextMap.get(key));
 			}
 		}
 	}
-
 }

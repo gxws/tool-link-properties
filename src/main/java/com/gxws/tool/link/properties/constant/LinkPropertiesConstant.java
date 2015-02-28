@@ -1,0 +1,25 @@
+package com.gxws.tool.link.properties.constant;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import com.gxws.tool.link.properties.annotation.LinkProperties;
+
+/**
+ * 读取必要属性的值
+ * 
+ * @author 朱伟亮
+ * @create 2015年2月27日下午5:33:56
+ *
+ */
+public class LinkPropertiesConstant {
+
+	@LinkProperties(value = "global.project.name")
+	public static String GLOBAL_PROJECT_NAME = "";
+	
+	@LinkProperties(value = "global.project.env")
+	public static String GLOBAL_PROJECT_ENV = "";
+
+	public static Map<String, String> GLOBAL_PROPERTY_MAP = new HashMap<>();
+	
+}

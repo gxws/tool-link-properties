@@ -2,7 +2,6 @@ package com.gxws.tool.link.properties.classtool;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import com.gxws.tool.link.properties.info.Property;
 
@@ -24,30 +23,40 @@ public interface ClassTool {
 	 * @param classnames
 	 * @return
 	 */
-	public Set<Class<?>> forClasses(List<String> classnames);
+	public List<Class<?>> forClasses(List<String> classnames);
 
 	/**
 	 * 获取所有配置项名称
 	 * 
 	 * @author 朱伟亮
-	 * @create 2015年2月10日下午5:00:54
+	 * @create 2015年2月28日上午11:35:34
 	 * 
-	 * @param classes
-	 *            配置项类
+	 * @param cls
 	 * @return
 	 */
-	public Set<Property> getProperty(Set<Class<?>> classes);
+	public List<Property> getProperty(Class<?> cls);
 
 	/**
 	 * 给配置类的属性设置值
 	 * 
 	 * @author 朱伟亮
-	 * @create 2015年2月11日上午9:01:55
+	 * @create 2015年2月28日上午11:35:43
 	 * 
-	 * @param classes
-	 *            配置项类
+	 * @param cls
 	 * @param map
-	 *            配置项和对应的值
 	 */
-	public void setProperty(Set<Class<?>> classes, Map<String, String> map);
+	@Deprecated
+	public void setProperty(Class<?> cls, Map<String, String> map);
+
+	/**
+	 * 给配置类的属性设置值
+	 * 
+	 * @author 朱伟亮
+	 * @create 2015年2月28日下午12:11:48
+	 * 
+	 * @param cls
+	 * @param fieldName
+	 * @param value
+	 */
+	public void setProperty(Class<?> cls, String fieldName, String value);
 }

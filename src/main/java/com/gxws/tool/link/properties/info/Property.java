@@ -1,7 +1,5 @@
 package com.gxws.tool.link.properties.info;
 
-import com.gxws.tool.link.properties.reader.ReaderType;
-
 /**
  * 配置项的相关信息
  * 
@@ -17,8 +15,6 @@ public class Property {
 
 	private String fullName;// 配置字段全名（包名+类名+字段名）
 
-	private ReaderType type;// 读取配置的类型
-
 	private boolean contextScope;// 变量是否需要添加到web application context
 
 	public boolean isContextScope() {
@@ -27,14 +23,6 @@ public class Property {
 
 	public void setContextScope(boolean contextScope) {
 		this.contextScope = contextScope;
-	}
-
-	public ReaderType getType() {
-		return type;
-	}
-
-	public void setType(ReaderType type) {
-		this.type = type;
 	}
 
 	public String getFieldName() {
