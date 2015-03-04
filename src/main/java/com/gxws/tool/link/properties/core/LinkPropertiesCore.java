@@ -2,7 +2,6 @@ package com.gxws.tool.link.properties.core;
 
 import java.net.InetAddress;
 import java.net.NetworkInterface;
-import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Enumeration;
@@ -89,6 +88,7 @@ public class LinkPropertiesCore {
 		}
 		ProjectConstant.NAME = LinkPropertiesConstant.GLOBAL_PROJECT_NAME;
 		ProjectConstant.ENV = LinkPropertiesConstant.GLOBAL_PROJECT_ENV;
+		ProjectConstant.VERSION = LinkPropertiesConstant.GLOBAL_PROJECT_VERSION;
 		LocalConstant.IP = ips();
 	}
 

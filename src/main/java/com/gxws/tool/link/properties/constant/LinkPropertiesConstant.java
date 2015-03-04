@@ -20,6 +20,9 @@ public class LinkPropertiesConstant {
 	@LinkProperties(value = "global.project.env")
 	public static String GLOBAL_PROJECT_ENV = "";
 
+	@LinkProperties(value = "global.project.version")
+	public static String GLOBAL_PROJECT_VERSION = "";
+
 	private static Map<String, String> map;
 
 	public static Map<String, String> GLOBAL_PROPERTY_MAP() {
@@ -27,6 +30,7 @@ public class LinkPropertiesConstant {
 			map = new HashMap<>();
 			map.put("global.project.name", "");
 			map.put("global.project.env", "");
+			map.put("global.project.version", "");
 		}
 		return map;
 	}
