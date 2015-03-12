@@ -10,7 +10,7 @@ import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.beans.factory.config.PropertyPlaceholderConfigurer;
 import org.springframework.web.context.ServletContextAware;
 
-import com.gxws.tool.link.properties.core.LinkPropertiesCore;
+import com.gxws.tool.link.properties.core.LinkPropertiesProperties;
 
 /**
  * 以spring bean 方式读取link properties配置参数
@@ -32,7 +32,7 @@ public class LinkPropertiesBean extends PropertyPlaceholderConfigurer implements
 
 	private ServletContext servletContext;
 
-	LinkPropertiesCore lpc = new LinkPropertiesCore();
+	LinkPropertiesProperties lpc = new LinkPropertiesProperties();
 
 	@Override
 	protected void processProperties(

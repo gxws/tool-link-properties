@@ -7,6 +7,7 @@ package com.gxws.tool.link.properties.exception;
  * @create 2015年2月10日下午3:37:30
  *
  */
+@Deprecated
 public class LinkPropertiesRequireMissingException extends
 		LinkPropertiesBaseException {
 

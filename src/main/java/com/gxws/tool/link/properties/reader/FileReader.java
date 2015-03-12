@@ -1,10 +1,10 @@
 package com.gxws.tool.link.properties.reader;
 
 import java.util.ResourceBundle;
-import java.util.Set;
 
 import com.gxws.tool.link.properties.exception.LinkPropertiesBaseException;
 import com.gxws.tool.link.properties.exception.LinkPropertiesKeyException;
+import com.gxws.tool.link.properties.exception.LinkPropertiesReaderInitException;
 import com.gxws.tool.link.properties.exception.LinkPropertiesValueException;
 
 /**
@@ -20,19 +20,26 @@ public class FileReader implements Reader {
 
 	private final String LINK_FILE_NAME = "link";
 
+	/**
+	 * @author 朱伟亮
+	 * @throws LinkPropertiesReaderInitException
+	 * @create 2015年3月12日上午11:55:37
+	 * 
+	 */
+	public FileReader() throws LinkPropertiesReaderInitException {
+		try {
+			linkFile = ResourceBundle.getBundle(LINK_FILE_NAME);
+		} catch (Exception e1) {
+			LinkPropertiesReaderInitException e = new LinkPropertiesReaderInitException();
+			e.setStackTrace(e1.getStackTrace());
+			e.setMessage(":");
+			throw e;
+		}
+	}
+
 	@Override
 	public String valueString(String propertyKey)
 			throws LinkPropertiesBaseException {
-		if (null == linkFile) {
-			try {
-				linkFile = ResourceBundle.getBundle(LINK_FILE_NAME);
-			} catch (Exception e1) {
-				LinkPropertiesBaseException e = new LinkPropertiesBaseException();
-				e.setMessage(LINK_FILE_NAME + ".properties loading");
-				e.setStackTrace(e1.getStackTrace());
-				throw e;
-			}
-		}
 		if (propertyKey == null) {
 			LinkPropertiesKeyException e = new LinkPropertiesKeyException();
 			e.setMessage("property key is null");
@@ -56,10 +63,4 @@ public class FileReader implements Reader {
 			}
 		}
 	}
-
-	@Override
-	public Set<String> localPropertyKeySet() {
-		return null;
-	}
-
 }

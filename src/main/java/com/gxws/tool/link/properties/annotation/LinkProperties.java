@@ -36,5 +36,5 @@ public @interface LinkProperties {
 	 * 
 	 * @return
 	 */
-	public boolean contextScope() default false;
+//	public boolean servletContextScope() default false;
 }

@@ -57,7 +57,6 @@ public class ReflectClassTool implements ClassTool {
 				} else {
 					p.setPropertyKey(lp.value());
 				}
-				p.setContextScope(lp.contextScope());
 				p.setFieldName(field.getName());
 				p.setFullName(cls.getName() + "." + field.getName());
 				list.add(p);

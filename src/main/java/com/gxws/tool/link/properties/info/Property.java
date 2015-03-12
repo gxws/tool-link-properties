@@ -15,15 +15,15 @@ public class Property {
 
 	private String fullName;// 配置字段全名（包名+类名+字段名）
 
-	private boolean contextScope;// 变量是否需要添加到web application context
+//	private boolean contextScope;// 变量是否需要添加到web application context
 
-	public boolean isContextScope() {
-		return contextScope;
-	}
-
-	public void setContextScope(boolean contextScope) {
-		this.contextScope = contextScope;
-	}
+//	public boolean isContextScope() {
+//		return contextScope;
+//	}
+//
+//	public void setContextScope(boolean contextScope) {
+//		this.contextScope = contextScope;
+//	}
 
 	public String getFieldName() {
 		return fieldName;

@@ -12,6 +12,7 @@ import com.gxws.tool.link.properties.annotation.LinkProperties;
  * @create 2015年2月27日下午5:33:56
  *
  */
+@Deprecated
 public class LinkPropertiesConstant {
 
 	@LinkProperties(value = "global.project.name")
