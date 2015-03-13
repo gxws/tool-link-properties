@@ -1,8 +1,8 @@
 package com.gxws.tool.link.properties.reader;
 
-import com.gxws.tool.link.properties.exception.LinkPropertiesBaseException;
-
 /**
+ * 从redis读取配置
+ * 
  * @author 朱伟亮
  * @create 2015年2月10日下午4:51:37
  *

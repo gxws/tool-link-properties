@@ -10,4 +10,6 @@ package com.gxws.tool.link.properties.exception;
 public class LinkPropertiesReaderInitException extends
 		LinkPropertiesBaseException {
 
+	private static final long serialVersionUID = -4918054219335019375L;
+
 }
