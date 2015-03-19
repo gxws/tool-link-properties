@@ -21,9 +21,9 @@ public class ZookeeperReader implements RemoteReader {
 
 	private Logger log = LoggerFactory.getLogger(getClass());
 
-	private final String NAMESPACE = "link.properties";
+	public final static String DEFAULT_NAMESPACE = "link.properties";
 
-	private final String DEFAULT_ADDR_ZOOKEEPER = "zookeeper.gxwsxx.com:17000";
+	public final static String DEFAULT_ADDR_ZOOKEEPER = "zookeeper.gxwsxx.com:17000";
 
 	private CuratorFramework cf;
 
@@ -39,10 +39,10 @@ public class ZookeeperReader implements RemoteReader {
 					.connectString(DEFAULT_ADDR_ZOOKEEPER)
 					.connectionTimeoutMs(5000).sessionTimeoutMs(5000)
 					.retryPolicy(new ExponentialBackoffRetry(1000, 3));
-			builder.namespace(NAMESPACE);
+			builder.namespace(DEFAULT_NAMESPACE);
 			cf = builder.build();
 			cf.start();
-			cf.newNamespaceAwareEnsurePath("/" + NAMESPACE);
+			cf.newNamespaceAwareEnsurePath("/" + DEFAULT_NAMESPACE);
 		} catch (Exception e1) {
 			LinkPropertiesReaderInitException e = new LinkPropertiesReaderInitException();
 			e.setStackTrace(e1.getStackTrace());
