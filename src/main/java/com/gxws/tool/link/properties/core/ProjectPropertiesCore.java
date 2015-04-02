@@ -25,7 +25,9 @@ public class ProjectPropertiesCore {
 
 	private Logger log = LoggerFactory.getLogger(getClass());
 
-	private final String DEFAULT_VALUE = "default";
+	public static final String ENV_DEFAULT_VALUE = "env_default";
+
+	public static final String PORT_DEFAULT_VALUE = "port_default";
 
 	/**
 	 * 设置项目全局变量
@@ -42,7 +44,7 @@ public class ProjectPropertiesCore {
 		 */
 		String env = System.getProperty(ProjectConstant.NAME_PROJECT_ENV);
 		if (null == env || "".equals(env)) {
-			env = DEFAULT_VALUE;
+			env = ENV_DEFAULT_VALUE;
 		}
 		ProjectConstant.VALUE_PROJECT_ENV = env;
 		ProjectConstant.put(ProjectConstant.NAME_PROJECT_ENV,
@@ -64,7 +66,7 @@ public class ProjectPropertiesCore {
 
 		String port = System.getProperty(ProjectConstant.NAME_PROJECT_PORT);
 		if (null == port || "".equals(port)) {
-			port = DEFAULT_VALUE;
+			port = PORT_DEFAULT_VALUE;
 		}
 		ProjectConstant.VALUE_PROJECT_PORT = port;
 		ProjectConstant.put(ProjectConstant.NAME_PROJECT_PORT,

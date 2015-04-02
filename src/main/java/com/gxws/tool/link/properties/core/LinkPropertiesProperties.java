@@ -8,6 +8,7 @@ import javax.servlet.ServletContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.gxws.tool.common.constant.ProjectConstant;
 import com.gxws.tool.link.properties.classtool.ReflectClassTool;
 import com.gxws.tool.link.properties.classtool.ClassTool;
 import com.gxws.tool.link.properties.exception.LinkPropertiesBaseException;
@@ -46,13 +47,19 @@ public class LinkPropertiesProperties {
 		ppc.handle(servletContext, props);
 		List<Class<?>> classList = ct.forClasses(classnames);
 		Reader reader;
-		try {
-			reader = new FileReader();
-		} catch (LinkPropertiesReaderInitException e) {
+		if (ProjectPropertiesCore.ENV_DEFAULT_VALUE
+				.equals(ProjectConstant.NAME_PROJECT_ENV)) {
+			try {
+				reader = new FileReader();
+			} catch (LinkPropertiesReaderInitException e) {
+				log.error("can not find 'link properties' resource", e);
+				return;
+			}
+		} else {
 			try {
 				reader = new ZookeeperReader();
-			} catch (LinkPropertiesReaderInitException e1) {
-				log.error("can not find 'link properties' resource");
+			} catch (LinkPropertiesReaderInitException e) {
+				log.error("can not find 'link properties' resource", e);
 				return;
 			}
 		}
