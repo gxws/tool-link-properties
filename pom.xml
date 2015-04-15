@@ -4,11 +4,15 @@
 	<parent>
 		<groupId>com.gxws</groupId>
 		<artifactId>top-config-project</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
+		<version>1.0.1</version>
 	</parent>
 	<artifactId>tool-link-properties</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.0-SNAPSHOT</version>
 	<packaging>jar</packaging>
+
+	<properties>
+		<version.tool.common>1.0.0-SNAPSHOT</version.tool.common>
+	</properties>
 
 	<dependencies>
 		<dependency>
@@ -20,6 +24,12 @@
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-web</artifactId>
 			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>com.gxws</groupId>
+			<artifactId>tool-common</artifactId>
+			<version>${version.tool.common}</version>
 		</dependency>
 	</dependencies>
 </project>
