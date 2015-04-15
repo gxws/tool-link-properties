@@ -7,11 +7,11 @@
 		<version>1.0.1</version>
 	</parent>
 	<artifactId>tool-link-properties</artifactId>
-	<version>1.0.0-SNAPSHOT</version>
+	<version>1.0.0</version>
 	<packaging>jar</packaging>
 
 	<properties>
-		<version.tool.common>1.0.0-SNAPSHOT</version.tool.common>
+		<version.tool.common>1.0.0</version.tool.common>
 	</properties>
 
 	<dependencies>
