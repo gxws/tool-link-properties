@@ -7,8 +7,8 @@ import com.gxws.tool.link.properties.info.Property;
 /**
  * 类工具asm
  * 
- * @author 朱伟亮
- * @create 2015年2月10日下午1:51:19
+ * @author zhuwl120820
+ *  2015年2月10日下午1:51:19
  *
  */
 public class AsmClassTool implements ClassTool {

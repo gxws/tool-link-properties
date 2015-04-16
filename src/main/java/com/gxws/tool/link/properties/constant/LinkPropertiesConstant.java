@@ -8,8 +8,8 @@ import com.gxws.tool.link.properties.annotation.LinkProperties;
 /**
  * 读取必要属性的值
  * 
- * @author 朱伟亮
- * @create 2015年2月27日下午5:33:56
+ * @author zhuwl120820
+ *  2015年2月27日下午5:33:56
  *
  */
 @Deprecated

@@ -21,8 +21,8 @@ import com.gxws.tool.link.properties.core.LinkPropertiesProperties;
  * 
  * 将读取的配置信息加入spring application context
  * 
- * @author 朱伟亮
- * @create 2015年2月10日下午1:40:59
+ * @author zhuwl120820
+ *  2015年2月10日下午1:40:59
  *
  */
 public class LinkPropertiesBean extends PropertyPlaceholderConfigurer implements

@@ -10,8 +10,8 @@ import com.gxws.tool.link.properties.exception.LinkPropertiesValueException;
 /**
  * 从link.properties获取配置信息
  * 
- * @author 朱伟亮
- * @create 2015年2月10日上午11:59:16
+ * @author zhuwl120820
+ *  2015年2月10日上午11:59:16
  *
  */
 public class FileReader implements Reader {
@@ -21,9 +21,9 @@ public class FileReader implements Reader {
 	private final String LINK_FILE_NAME = "link";
 
 	/**
-	 * @author 朱伟亮
+	 * @author zhuwl120820
 	 * @throws LinkPropertiesReaderInitException
-	 * @create 2015年3月12日上午11:55:37
+	 *  2015年3月12日上午11:55:37
 	 * 
 	 */
 	public FileReader() throws LinkPropertiesReaderInitException {

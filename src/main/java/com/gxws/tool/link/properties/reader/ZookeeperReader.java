@@ -13,8 +13,8 @@ import com.gxws.tool.link.properties.exception.LinkPropertiesReaderInitException
 /**
  * 通过zookeeper获取配置信息
  * 
- * @author 朱伟亮
- * @create 2015年2月10日下午2:37:19
+ * @author zhuwl120820
+ *  2015年2月10日下午2:37:19
  *
  */
 public class ZookeeperReader implements RemoteReader {
@@ -28,9 +28,9 @@ public class ZookeeperReader implements RemoteReader {
 	private CuratorFramework cf;
 
 	/**
-	 * @author 朱伟亮
+	 * @author zhuwl120820
 	 * @throws LinkPropertiesReaderInitException
-	 * @create 2015年3月12日下午12:02:01
+	 *  2015年3月12日下午12:02:01
 	 * 
 	 */
 	public ZookeeperReader() throws LinkPropertiesReaderInitException {

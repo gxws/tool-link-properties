@@ -3,8 +3,8 @@ package com.gxws.tool.link.properties.exception;
 /**
  * 配置信息异常
  * 
- * @author 朱伟亮
- * @create 2015年2月10日下午2:46:46
+ * @author zhuwl120820
+ *  2015年2月10日下午2:46:46
  *
  */
 public class LinkPropertiesBaseException extends Exception {
