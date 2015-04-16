@@ -3,7 +3,7 @@ package com.gxws.tool.link.properties.exception;
 /**
  * 配置读取对象初始化异常
  * 
- * @author zhuwl120820
+ * @author zhuwl120820@gxwsxx.com
  *  2015年3月12日下午12:20:17
  *
  */

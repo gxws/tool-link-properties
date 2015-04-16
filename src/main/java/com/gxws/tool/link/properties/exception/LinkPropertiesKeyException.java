@@ -3,7 +3,7 @@ package com.gxws.tool.link.properties.exception;
 /**
  * 配置信息属性名异常
  * 
- * @author zhuwl120820
+ * @author zhuwl120820@gxwsxx.com
  *  2015年2月10日下午2:46:19
  *
  */

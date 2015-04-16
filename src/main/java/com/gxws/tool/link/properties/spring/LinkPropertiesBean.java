@@ -21,7 +21,7 @@ import com.gxws.tool.link.properties.core.LinkPropertiesProperties;
  * 
  * 将读取的配置信息加入spring application context
  * 
- * @author zhuwl120820
+ * @author zhuwl120820@gxwsxx.com
  *  2015年2月10日下午1:40:59
  *
  */

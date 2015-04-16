@@ -3,7 +3,7 @@ package com.gxws.tool.link.properties.info;
 /**
  * 配置项的相关信息
  * 
- * @author zhuwl120820
+ * @author zhuwl120820@gxwsxx.com
  *  2015年2月10日下午5:11:57
  *
  */

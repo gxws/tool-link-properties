@@ -7,7 +7,7 @@ import com.gxws.tool.link.properties.info.Property;
 /**
  * 类工具asm
  * 
- * @author zhuwl120820
+ * @author zhuwl120820@gxwsxx.com
  *  2015年2月10日下午1:51:19
  *
  */

@@ -7,7 +7,7 @@ import com.gxws.tool.link.properties.info.Property;
 /**
  * 读取和设置类属性等信息
  * 
- * @author zhuwl120820
+ * @author zhuwl120820@gxwsxx.com
  *  2015年2月10日下午1:51:50
  *
  */
@@ -16,7 +16,7 @@ public interface ClassTool {
 	/**
 	 * 获取所有配置类
 	 * 
-	 * @author zhuwl120820
+	 * @author zhuwl120820@gxwsxx.com
 	 *  2015年2月10日下午5:00:41
 	 * 
 	 * @param classnames
@@ -27,7 +27,7 @@ public interface ClassTool {
 	/**
 	 * 获取所有配置项名称
 	 * 
-	 * @author zhuwl120820
+	 * @author zhuwl120820@gxwsxx.com
 	 *  2015年2月28日上午11:35:34
 	 * 
 	 * @param cls
@@ -38,7 +38,7 @@ public interface ClassTool {
 	/**
 	 * 给配置类的属性设置值
 	 * 
-	 * @author zhuwl120820
+	 * @author zhuwl120820@gxwsxx.com
 	 *  2015年2月28日下午12:11:48
 	 * 
 	 * @param cls

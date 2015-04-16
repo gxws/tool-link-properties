@@ -3,7 +3,7 @@ package com.gxws.tool.link.properties.reader;
 /**
  * 从redis读取配置
  * 
- * @author zhuwl120820
+ * @author zhuwl120820@gxwsxx.com
  *  2015年2月10日下午4:51:37
  *
  */

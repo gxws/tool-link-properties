@@ -3,7 +3,7 @@ package com.gxws.tool.link.properties.exception;
 /**
  * 必要属性缺失异常
  * 
- * @author zhuwl120820
+ * @author zhuwl120820@gxwsxx.com
  *  2015年2月10日下午3:37:30
  *
  */
