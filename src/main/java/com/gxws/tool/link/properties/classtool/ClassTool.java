@@ -7,8 +7,7 @@ import com.gxws.tool.link.properties.info.Property;
 /**
  * 读取和设置类属性等信息
  * 
- * @author zhuwl120820@gxwsxx.com
- *  2015年2月10日下午1:51:50
+ * @author zhuwl120820@gxwsxx.com 2015年2月10日下午1:51:50
  *
  */
 public interface ClassTool {
@@ -16,34 +15,36 @@ public interface ClassTool {
 	/**
 	 * 获取所有配置类
 	 * 
-	 * @author zhuwl120820@gxwsxx.com
-	 *  2015年2月10日下午5:00:41
+	 * @author zhuwl120820@gxwsxx.com 2015年2月10日下午5:00:41
 	 * 
 	 * @param classnames
-	 * @return
+	 *            要加载的类全名
+	 * @return 要加载的类对象
 	 */
 	public List<Class<?>> forClasses(List<String> classnames);
 
 	/**
-	 * 获取所有配置项名称
+	 * 获取所有配置项的配置相关信息
 	 * 
-	 * @author zhuwl120820@gxwsxx.com
-	 *  2015年2月28日上午11:35:34
+	 * @author zhuwl120820@gxwsxx.com 2015年2月28日上午11:35:34
 	 * 
 	 * @param cls
-	 * @return
+	 *            Constants类对象
+	 * @return Constants类相关信息
 	 */
 	public List<Property> getProperty(Class<?> cls);
 
 	/**
 	 * 给配置类的属性设置值
 	 * 
-	 * @author zhuwl120820@gxwsxx.com
-	 *  2015年2月28日下午12:11:48
+	 * @author zhuwl120820@gxwsxx.com 2015年2月28日下午12:11:48
 	 * 
 	 * @param cls
+	 *            Constants类对象
 	 * @param fieldName
+	 *            配置项名称
 	 * @param value
+	 *            配置项值
 	 */
 	public void setProperty(Class<?> cls, String fieldName, String value);
 }

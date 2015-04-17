@@ -17,8 +17,7 @@ import com.gxws.tool.common.constant.ProjectConstant;
 /**
  * 处理项目全局变量
  * 
- * @author zhuwl120820@gxwsxx.com
- *  2015年3月12日下午3:11:05
+ * @author zhuwl120820@gxwsxx.com 2015年3月12日下午3:11:05
  *
  */
 public class ProjectPropertiesCore {
@@ -32,11 +31,12 @@ public class ProjectPropertiesCore {
 	/**
 	 * 设置项目全局变量
 	 * 
-	 * @author zhuwl120820@gxwsxx.com
-	 *  2015年3月12日下午3:12:04
+	 * @author zhuwl120820@gxwsxx.com 2015年3月12日下午3:12:04
 	 * 
 	 * @param servletContext
+	 *            从interceptor获取的servlet context对象
 	 * @param props
+	 *            从spring bean factory获取的Properties对象
 	 */
 	public void handle(ServletContext servletContext, Properties props) {
 		/**
@@ -86,10 +86,9 @@ public class ProjectPropertiesCore {
 	/**
 	 * 获取网卡IP地址
 	 * 
-	 * @author zhuwl120820@gxwsxx.com
-	 *  2015年3月12日下午2:30:52
+	 * @author zhuwl120820@gxwsxx.com 2015年3月12日下午2:30:52
 	 * 
-	 * @return
+	 * @return ip地址，以","分隔
 	 */
 	private String ips() {
 		Enumeration<NetworkInterface> netInterfaces;

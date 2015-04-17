@@ -11,8 +11,7 @@ import java.lang.annotation.Target;
  * 读取配置项的注解<br>
  * 需要添加在定义为public statis String 的field上
  * 
- * @author zhuwl120820@gxwsxx.com
- *  2015年2月10日上午11:27:25
+ * @author zhuwl120820@gxwsxx.com 2015年2月10日上午11:27:25
  *
  */
 @Documented
@@ -24,10 +23,9 @@ public @interface LinkProperties {
 	/**
 	 * 参数名
 	 * 
-	 * @author zhuwl120820@gxwsxx.com
-	 *  2015年2月10日上午11:29:51
+	 * @author zhuwl120820@gxwsxx.com 2015年2月10日上午11:29:51
 	 * 
-	 * @return
+	 * @return 参数名
 	 */
 	public String value() default "";
 

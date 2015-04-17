@@ -21,8 +21,7 @@ import com.gxws.tool.link.properties.reader.ZookeeperReader;
 /**
  * 获取相应配置类，读取配置信息，并写入相应的变量
  * 
- * @author zhuwl120820@gxwsxx.com
- *  2015年2月10日上午11:57:19
+ * @author zhuwl120820@gxwsxx.com 2015年2月10日上午11:57:19
  *
  */
 public class LinkPropertiesProperties {
@@ -36,11 +35,12 @@ public class LinkPropertiesProperties {
 	/**
 	 * 处理静态变量
 	 * 
-	 * @author zhuwl120820@gxwsxx.com
-	 *  2015年2月12日上午10:22:08
+	 * @author zhuwl120820@gxwsxx.com 2015年2月12日上午10:22:08
 	 * 
 	 * @param classnames
+	 *            所有类名
 	 * @param servletContext
+	 *            从interceptor获取的servlet上下文
 	 */
 	public void handle(List<String> classnames, Properties props,
 			ServletContext servletContext) {
