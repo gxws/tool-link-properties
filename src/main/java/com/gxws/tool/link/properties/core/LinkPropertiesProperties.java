@@ -42,6 +42,16 @@ public class LinkPropertiesProperties {
 	 * @param servletContext
 	 *            从interceptor获取的servlet上下文
 	 */
+
+	/**
+	 * 
+	 * @param classnames
+	 *            所有类名
+	 * @param props
+	 *            从spring bean factory获取的Properties对象
+	 * @param servletContext
+	 *            servletContext 从interceptor获取的servlet上下文
+	 */
 	public void handle(List<String> classnames, Properties props,
 			ServletContext servletContext) {
 		ppc.handle(servletContext, props);
