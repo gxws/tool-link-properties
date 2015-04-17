@@ -16,6 +16,7 @@ public interface Reader {
 	 *            属性名
 	 * @return 属性值
 	 * @throws LinkPropertiesBaseException
+	 *             读取属性值异常
 	 */
 	public String valueString(String key) throws LinkPropertiesBaseException;
 
