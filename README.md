@@ -6,11 +6,14 @@ tool-link-properties
 
 版本变更说明
 ---
-# 1
-## 1.0
-### 1.0.3
-完善了说明文档README.md。<br>
-将配置文件log4j2.xml和spring-logging.xml从项目目录转移至tool-logging的包目录。
+> 1
+>> 1.0
+>>> 1.0.3
+>>>> 新添加功能：
+>>>> 完善了说明文档README.md。<br>
+>>>> 将配置文件log4j2.xml和spring-logging.xml从项目目录转移至tool-logging的包目录。<br>
+>>>> 修复bug：
+>>>> 无
 
 功能点
 ---
@@ -96,6 +99,26 @@ org.apache.curator curator-framework 2.7<br>
 ---
 
 ## 1、读取
+定义静态变量类、静态字段。<br>
+给静态字段添加注解@LinkProperties，value的值为读取配置的key值。<br>
+规则一般为静态字段字母由小写改为大写，"."改为"_"。
+	
+	package com.gxws.service.demo.constant;
+
+	import com.gxws.tool.link.properties.annotation.LinkProperties;
+	
+	public class Constant {
+	
+		@LinkProperties(value = "db.url")
+		public static String DB_URL;
+	
+		@LinkProperties(value = "db.username")
+		public static String DB_USERNAME;
+	
+		@LinkProperties(value = "db.password")
+		public static String DB_PASSWORD;
+	}
+	
 
 
 ## 2、使用
@@ -111,21 +134,20 @@ org.apache.curator curator-framework 2.7<br>
 
 	<html>
 		<body>
-			${project.name}
+			${VALUE_PROJECT_NAME}
 		</body>
 	</html>
 
 ### 3、java代码变量使用项目配置的值：
 
-```java
-import com.gxws.tool.common.constant.ProjectConstant;
-
-public class DemoClass {
-	public void DemoMethod(){
-		system.out.println(ProjectConstant.VALUE_PROJECT_NAME);
-		system.out.println(ProjectConstant.get("project.name"));
-		system.out.println(ProjectConstant.get(ProjectConstant.NAME_PROJECT_NAME));
+	import com.gxws.tool.common.constant.ProjectConstant;
+	
+	public class DemoClass {
+		public void DemoMethod(){
+			system.out.println(ProjectConstant.VALUE_PROJECT_NAME);
+			system.out.println(ProjectConstant.get("project.name"));
+			system.out.println(ProjectConstant.get(ProjectConstant.NAME_PROJECT_NAME));
+		}
 	}
-}
-```
+
 
