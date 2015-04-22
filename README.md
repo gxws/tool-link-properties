@@ -118,14 +118,14 @@ org.apache.curator curator-framework 2.7<br>
 ### 3、java代码变量使用项目配置的值：
 
 ```java
-	import com.gxws.tool.common.constant.ProjectConstant;
-	
-	public class DemoClass {
-		public void DemoMethod(){
-			system.out.println(ProjectConstant.VALUE_PROJECT_NAME);
-			system.out.println(ProjectConstant.get("project.name"));
-			system.out.println(ProjectConstant.get(ProjectConstant.NAME_PROJECT_NAME));
-		}
+import com.gxws.tool.common.constant.ProjectConstant;
+
+public class DemoClass {
+	public void DemoMethod(){
+		system.out.println(ProjectConstant.VALUE_PROJECT_NAME);
+		system.out.println(ProjectConstant.get("project.name"));
+		system.out.println(ProjectConstant.get(ProjectConstant.NAME_PROJECT_NAME));
 	}
+}
 ```
 
