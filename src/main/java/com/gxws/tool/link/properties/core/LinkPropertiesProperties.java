@@ -35,16 +35,6 @@ public class LinkPropertiesProperties {
 	/**
 	 * 处理静态变量
 	 * 
-	 * @author zhuwl120820@gxwsxx.com 2015年2月12日上午10:22:08
-	 * 
-	 * @param classnames
-	 *            所有类名
-	 * @param servletContext
-	 *            从interceptor获取的servlet上下文
-	 */
-
-	/**
-	 * 
 	 * @param classnames
 	 *            所有类名
 	 * @param props
