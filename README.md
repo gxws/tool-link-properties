@@ -1,7 +1,7 @@
 tool-link-properties
 ====================
 
-mail list:朱伟亮 <zhuwl120820@gxwsxx.com>
+mail list:朱伟亮 \<zhuwl120820@gxwsxx.com>
 
 初始化项目“全局变量”。<br>
 从配置文件或远程读取项目“自定义变量”。<br>

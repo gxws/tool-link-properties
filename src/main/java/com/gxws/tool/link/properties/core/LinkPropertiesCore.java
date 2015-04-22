@@ -27,7 +27,7 @@ import com.gxws.tool.link.properties.reader.ZookeeperReader;
  * @author zhuwl120820@gxwsxx.com 2015年2月10日上午11:57:19
  *
  */
-public class LinkPropertiesProperties {
+public class LinkPropertiesCore {
 
 	private Logger log = LoggerFactory.getLogger(getClass());
 

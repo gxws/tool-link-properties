@@ -81,14 +81,14 @@ public class ProjectPropertiesCore {
 				.getInitParameter(ProjectConstant.NAME_PROJECT_VERSION));
 		pc.setIp(ips());
 		pc.setPort(System.getProperty(ProjectConstant.NAME_PROJECT_PORT));
-//		/**
-//		 * 将值放入servlet context
-//		 */
-//		for (String k : pc.getAll().keySet()) {
-//			servletContext.setAttribute(k, pc.get(k));
-//		}
+		/**
+		 * 将值放入servlet context
+		 */
+		for (String k : pc.getAll().keySet()) {
+			servletContext.setAttribute(k, ProjectConstant.get(k));
+		}
 		servletContext.setAttribute("project", pc);
-		
+
 		/**
 		 * 将值放入spring properties
 		 */
