@@ -1,6 +1,8 @@
 tool-link-properties
 ====================
 
+mail list:朱伟亮 <zhuwl120820@gxwsxx.com>
+
 初始化项目“全局变量”。<br>
 从配置文件或远程读取项目“自定义变量”。<br>
 将“全局变量”和“自定义变量”的配置信息放入spring启动配置和application context。<br>
@@ -12,8 +14,10 @@ tool-link-properties
 ## 1.0
 ### 1.0.3
 #### 新功能：
- 完善了说明文档README.md。<br>
- 将配置文件log4j2.xml和spring-logging.xml从项目目录转移至tool-logging的包目录。<br>
+完善了说明文档README.md。<br>
+将配置文件log4j2.xml和spring-logging.xml从项目目录转移至tool-logging的包目录。<br>
+更改“自定义变量”使用“远程配置读取”方式的规则，["dev","test","real"]远程读取，其他则配置文件读取。<br>
+更改“全局变量”jsp获取方式
  
 #### 修复：
  无
@@ -104,8 +108,6 @@ com.gxws tool-common 1.0.1<br>
 org.apache.curator curator-framework 2.7<br>
 
 
-
-
 使用方式
 ---
 ## 1、读取
@@ -159,7 +161,7 @@ value为上一步定义的静态类。
 
 	<html>
 		<body>
-			${VALUE_PROJECT_NAME}
+			${project.name}
 		</body>
 	</html>
 
@@ -169,7 +171,7 @@ value为上一步定义的静态类。
 	
 	public class DemoClass {
 		public void DemoMethod(){
-			system.out.println(ProjectConstant.VALUE_PROJECT_NAME);
+			system.out.println(ProjectConstant.instance().getName());
 			system.out.println(ProjectConstant.get("project.name"));
 			system.out.println(ProjectConstant.get(ProjectConstant.NAME_PROJECT_NAME));
 		}
@@ -191,6 +193,9 @@ value为上一步定义的静态类。
 	<html>
 		<body>
 			${stc}
+			${Constant.stc}
+			${DB_URL}
+			${Constant.DB_URL}
 		</body>
 	</html>
 	

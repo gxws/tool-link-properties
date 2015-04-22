@@ -1,7 +1,10 @@
 package com.gxws.tool.link.properties.core;
 
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Properties;
+import java.util.Set;
 
 import javax.servlet.ServletContext;
 
@@ -32,8 +35,11 @@ public class LinkPropertiesProperties {
 
 	private ProjectPropertiesCore ppc = new ProjectPropertiesCore();
 
+	private final Set<String> envRemoteSet = new HashSet<String>(
+			Arrays.asList(new String[] { "dev", "test", "real" }));
+
 	/**
-	 * 处理静态变量
+	 * 处理自定义变量
 	 * 
 	 * @param classnames
 	 *            所有类名
@@ -47,17 +53,32 @@ public class LinkPropertiesProperties {
 		ppc.handle(servletContext, props);
 		List<Class<?>> classList = ct.forClasses(classnames);
 		Reader reader;
-		if (ProjectPropertiesCore.ENV_DEFAULT_VALUE
-				.equals(ProjectConstant.NAME_PROJECT_ENV)) {
+		// if (ProjectPropertiesCore.ENV_DEFAULT_VALUE
+		// .equals(ProjectConstant.NAME_PROJECT_ENV)) {
+		// try {
+		// reader = new FileReader();
+		// } catch (LinkPropertiesReaderInitException e) {
+		// log.error("can not find 'link properties' resource", e);
+		// return;
+		// }
+		// } else {
+		// try {
+		// reader = new ZookeeperReader();
+		// } catch (LinkPropertiesReaderInitException e) {
+		// log.error("can not find 'link properties' resource", e);
+		// return;
+		// }
+		// }
+		if (envRemoteSet.contains(ProjectConstant.NAME_PROJECT_ENV)) {
 			try {
-				reader = new FileReader();
+				reader = new ZookeeperReader();
 			} catch (LinkPropertiesReaderInitException e) {
 				log.error("can not find 'link properties' resource", e);
 				return;
 			}
 		} else {
 			try {
-				reader = new ZookeeperReader();
+				reader = new FileReader();
 			} catch (LinkPropertiesReaderInitException e) {
 				log.error("can not find 'link properties' resource", e);
 				return;

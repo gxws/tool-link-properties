@@ -24,9 +24,9 @@ public class ProjectPropertiesCore {
 
 	private Logger log = LoggerFactory.getLogger(getClass());
 
-	public static final String ENV_DEFAULT_VALUE = "env_default";
+	// public static final String ENV_DEFAULT_VALUE = "env_default";
 
-	public static final String PORT_DEFAULT_VALUE = "port_default";
+	// public static final String PORT_DEFAULT_VALUE = "port_default";
 
 	/**
 	 * 设置项目全局变量
@@ -39,48 +39,60 @@ public class ProjectPropertiesCore {
 	 *            从spring bean factory获取的Properties对象
 	 */
 	public void handle(ServletContext servletContext, Properties props) {
+		// /**
+		// * 获取值
+		// */
+		// String env = System.getProperty(ProjectConstant.NAME_PROJECT_ENV);
+		// if (null == env || "".equals(env)) {
+		// env = ENV_DEFAULT_VALUE;
+		// }
+		// ProjectConstant.VALUE_PROJECT_ENV = env;
+		// ProjectConstant.put(ProjectConstant.NAME_PROJECT_ENV,
+		// ProjectConstant.VALUE_PROJECT_ENV);
+		//
+		// ProjectConstant.VALUE_PROJECT_NAME = servletContext
+		// .getServletContextName();
+		// ProjectConstant.put(ProjectConstant.NAME_PROJECT_NAME,
+		// ProjectConstant.VALUE_PROJECT_NAME);
+		//
+		// ProjectConstant.VALUE_PROJECT_VERSION = servletContext
+		// .getInitParameter(ProjectConstant.NAME_PROJECT_VERSION);
+		// ProjectConstant.put(ProjectConstant.NAME_PROJECT_VERSION,
+		// ProjectConstant.VALUE_PROJECT_VERSION);
+		//
+		// ProjectConstant.VALUE_PROJECT_IP = ips();
+		// ProjectConstant.put(ProjectConstant.NAME_PROJECT_IP,
+		// ProjectConstant.VALUE_PROJECT_IP);
+		//
+		// String port = System.getProperty(ProjectConstant.NAME_PROJECT_PORT);
+		// if (null == port || "".equals(port)) {
+		// port = PORT_DEFAULT_VALUE;
+		// }
+		// ProjectConstant.VALUE_PROJECT_PORT = port;
+		// ProjectConstant.put(ProjectConstant.NAME_PROJECT_PORT,
+		// ProjectConstant.VALUE_PROJECT_PORT);
 		/**
 		 * 获取值
 		 */
-		String env = System.getProperty(ProjectConstant.NAME_PROJECT_ENV);
-		if (null == env || "".equals(env)) {
-			env = ENV_DEFAULT_VALUE;
-		}
-		ProjectConstant.VALUE_PROJECT_ENV = env;
-		ProjectConstant.put(ProjectConstant.NAME_PROJECT_ENV,
-				ProjectConstant.VALUE_PROJECT_ENV);
-
-		ProjectConstant.VALUE_PROJECT_NAME = servletContext
-				.getServletContextName();
-		ProjectConstant.put(ProjectConstant.NAME_PROJECT_NAME,
-				ProjectConstant.VALUE_PROJECT_NAME);
-
-		ProjectConstant.VALUE_PROJECT_VERSION = servletContext
-				.getInitParameter(ProjectConstant.NAME_PROJECT_VERSION);
-		ProjectConstant.put(ProjectConstant.NAME_PROJECT_VERSION,
-				ProjectConstant.VALUE_PROJECT_VERSION);
-
-		ProjectConstant.VALUE_PROJECT_IP = ips();
-		ProjectConstant.put(ProjectConstant.NAME_PROJECT_IP,
-				ProjectConstant.VALUE_PROJECT_IP);
-
-		String port = System.getProperty(ProjectConstant.NAME_PROJECT_PORT);
-		if (null == port || "".equals(port)) {
-			port = PORT_DEFAULT_VALUE;
-		}
-		ProjectConstant.VALUE_PROJECT_PORT = port;
-		ProjectConstant.put(ProjectConstant.NAME_PROJECT_PORT,
-				ProjectConstant.VALUE_PROJECT_PORT);
-		/**
-		 * 将值放入servlet context
-		 */
-		for (String k : ProjectConstant.getAll().keySet()) {
-			servletContext.setAttribute(k, ProjectConstant.get(k));
-		}
+		ProjectConstant pc = ProjectConstant.instance();
+		pc.setEnv(System.getProperty(ProjectConstant.NAME_PROJECT_ENV));
+		pc.setName(servletContext.getServletContextName());
+		pc.setVersion(servletContext
+				.getInitParameter(ProjectConstant.NAME_PROJECT_VERSION));
+		pc.setIp(ips());
+		pc.setPort(System.getProperty(ProjectConstant.NAME_PROJECT_PORT));
+//		/**
+//		 * 将值放入servlet context
+//		 */
+//		for (String k : pc.getAll().keySet()) {
+//			servletContext.setAttribute(k, pc.get(k));
+//		}
+		servletContext.setAttribute("project", pc);
+		
 		/**
 		 * 将值放入spring properties
 		 */
-		props.putAll(ProjectConstant.getAll());
+		props.putAll(pc.getAll());
 	}
 
 	/**

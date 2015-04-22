@@ -13,8 +13,7 @@ import com.gxws.tool.link.properties.exception.LinkPropertiesReaderInitException
 /**
  * 通过zookeeper获取配置信息
  * 
- * @author zhuwl120820@gxwsxx.com
- *  2015年2月10日下午2:37:19
+ * @author zhuwl120820@gxwsxx.com 2015年2月10日下午2:37:19
  *
  */
 public class ZookeeperReader implements RemoteReader {
@@ -30,7 +29,7 @@ public class ZookeeperReader implements RemoteReader {
 	/**
 	 * @author zhuwl120820@gxwsxx.com
 	 * @throws LinkPropertiesReaderInitException
-	 *  2015年3月12日下午12:02:01
+	 *             2015年3月12日下午12:02:01
 	 * 
 	 */
 	public ZookeeperReader() throws LinkPropertiesReaderInitException {
@@ -53,8 +52,11 @@ public class ZookeeperReader implements RemoteReader {
 
 	@Override
 	public String valueString(String propertyKey) {
-		String path = "/" + ProjectConstant.VALUE_PROJECT_ENV + "/"
-				+ ProjectConstant.VALUE_PROJECT_NAME + "/" + propertyKey;
+		// String path = "/" + ProjectConstant.VALUE_PROJECT_ENV + "/"
+		// + ProjectConstant.VALUE_PROJECT_NAME + "/" + propertyKey;
+		ProjectConstant pc = ProjectConstant.instance();
+		String path = "/" + pc.getEnv() + "/" + pc.getName() + "/"
+				+ propertyKey;
 		try {
 			return new String(cf.getData().forPath(path), "utf-8");
 		} catch (Exception e) {
