@@ -110,7 +110,17 @@ org.apache.curator curator-framework 2.7<br>
 
 使用方式
 ---
-## 1、读取
+
+## 1、引入maven配置
+在pom.xml文件中加入
+
+	<dependency>
+		<groupId>com.gxws</groupId>
+		<artifactId>tool-link-properties</artifactId>
+		<version>最新版本号</version>
+	</dependency>
+	
+## 2、读取
 定义java静态类、静态字段。<br>
 给静态字段添加注解@LinkProperties，value的值为读取配置的key值。<br>
 规则一般为静态字段字母由小写改为大写，"."改为"_"。
@@ -149,7 +159,7 @@ org.apache.curator curator-framework 2.7<br>
 	
 value为上一步定义的静态类。
 
-## 2、使用
+## 3、使用
 ### 使用“全局变量”，以项目名的使用为例：
 #### 1、spring配置使用“全局变量”的值：
 
