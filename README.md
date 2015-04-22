@@ -1,24 +1,29 @@
 tool-link-properties
 ====================
 
-集成spring启动，从配置文件和远程读取相应的配置信息，将配置信息放入application context
+初始化项目“全局变量”。<br>
+从配置文件或远程读取项目“自定义变量”。<br>
+将“全局变量”和“自定义变量”的配置信息放入spring启动配置和application context。<br>
 
 
 版本变更说明
 ---
-> 1
->> 1.0
->>> 1.0.3
->>>> 新添加功能：
->>>> 完善了说明文档README.md。<br>
->>>> 将配置文件log4j2.xml和spring-logging.xml从项目目录转移至tool-logging的包目录。<br>
->>>> 修复bug：
->>>> 无
+# 1
+## 1.0
+### 1.0.3
+#### 新功能：
+ 完善了说明文档README.md。<br>
+ 将配置文件log4j2.xml和spring-logging.xml从项目目录转移至tool-logging的包目录。<br>
+ 
+#### 修复：
+ 无
+
+
+
 
 功能点
 ---
-
-### 1、项目启动时初始化全局变量
+### 1、项目启动时初始化“全局变量”配置
 项目全局变量包括：<br>
 
 #### 项目名：
@@ -64,7 +69,7 @@ tool-link-properties
 默认值：port_default<br>
 键(key)：project.port<br>
 
-### 2、项目启动时读取项目配置
+### 2、项目启动时读取“自定义变量”配置
 #### 配置读取方式
 读取方式分为“配置文件读取”和“远程配置读取”两种。<br>
 配置文件读取：配置项会从配置文件classpath:link.properties中读取。<br>
@@ -77,13 +82,16 @@ tool-link-properties
 ##### zookeeper
 读取路径:/link.properties/${project.env}/${project.name}/${key}<br>
 以test环境web-tv-demo项目的静态地址stc的值为示例：/link.properties/test/web-tv-demo/stc
+以dev环境service-demo项目的数据库连接地址db.url的值为示例：/link.properties/dev/service-demo/db.url
 
 ##### redis
 计划扩展，暂不支持
 
+
+
+
 依赖关系
 ---
-
 ### 1、服务依赖
 #### zookeeper
 “远程配置读取”方式中需要依赖zookeeper服务。<br>
@@ -95,20 +103,25 @@ org.springframework spring-web 4.1<br>
 com.gxws tool-common 1.0.1<br>
 org.apache.curator curator-framework 2.7<br>
 
+
+
+
 使用方式
 ---
-
 ## 1、读取
-定义静态变量类、静态字段。<br>
+定义java静态类、静态字段。<br>
 给静态字段添加注解@LinkProperties，value的值为读取配置的key值。<br>
 规则一般为静态字段字母由小写改为大写，"."改为"_"。
 	
-	package com.gxws.service.demo.constant;
+	package com.gxws.web.tv.demo.constant;
 
 	import com.gxws.tool.link.properties.annotation.LinkProperties;
 	
 	public class Constant {
 	
+		@LinkProperties
+		public static String stc;
+		
 		@LinkProperties(value = "db.url")
 		public static String DB_URL;
 	
@@ -119,18 +132,30 @@ org.apache.curator curator-framework 2.7<br>
 		public static String DB_PASSWORD;
 	}
 	
+在spring配置文件中添加
 
+	<beans>
+		<!-- 读取配置 -->
+		<bean class="com.gxws.tool.link.properties.spring.LinkPropertiesBean">
+			<property name="constantClassnames">
+				<list>
+					<value>com.gxws.web.tv.demo.constant.Constant</value>
+				</list>
+			</property>
+		</bean>
+	</beans>
+	
+value为上一步定义的静态类。
 
 ## 2、使用
-以项目名的使用为例：<br>
-
-### 1、spring配置使用项目配置的值：
+### 使用“全局变量”，以项目名的使用为例：
+#### 1、spring配置使用“全局变量”的值：
 
 	<beans>
 		<dubbo:application name="${project.name}" />
 	</beans>
 	
-### 2、jsp页面EL表达式使用项目配置的值:
+#### 2、jsp页面EL表达式使用“全局变量”的值:
 
 	<html>
 		<body>
@@ -138,7 +163,7 @@ org.apache.curator curator-framework 2.7<br>
 		</body>
 	</html>
 
-### 3、java代码变量使用项目配置的值：
+#### 3、java代码变量使用“全局变量”的值：
 
 	import com.gxws.tool.common.constant.ProjectConstant;
 	
@@ -150,4 +175,32 @@ org.apache.curator curator-framework 2.7<br>
 		}
 	}
 
+### 使用“自定义变量”，以stc为例
+#### 1、spring配置使用“自定义变量”的值：
 
+	<beans>
+		<bean id="dataSourceDruid">
+			<property name="url" value="${db.url}" />
+			<property name="username" value="${db.username}" />
+			<property name="password" value="${db.password}" />
+		</bean>
+	</beans>
+	
+#### 2、jsp页面EL表达式使用“自定义变量”的值:
+
+	<html>
+		<body>
+			${stc}
+		</body>
+	</html>
+	
+#### 3、java代码变量使用“自定义变量”的值：
+
+	import com.gxws.web.tv.demo.constant.Constant;
+	
+	public class DemoClass {
+		public void DemoMethod(){
+			system.out.println(Constant.stc);
+			system.out.println(Constant.DB_URL);
+		}
+	}
