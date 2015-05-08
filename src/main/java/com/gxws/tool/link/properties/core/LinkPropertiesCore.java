@@ -35,8 +35,8 @@ public class LinkPropertiesCore {
 
 	private ProjectPropertiesCore ppc = new ProjectPropertiesCore();
 
-	private final Set<String> envRemoteSet = new HashSet<String>(
-			Arrays.asList(new String[] { "dev", "test", "real" }));
+	// private final Set<String> envRemoteSet = new HashSet<String>(
+	// Arrays.asList(new String[] { "dev", "test", "real" }));
 
 	/**
 	 * 处理自定义变量
@@ -69,7 +69,8 @@ public class LinkPropertiesCore {
 		// return;
 		// }
 		// }
-		if (envRemoteSet.contains(ProjectConstant.NAME_PROJECT_ENV)) {
+		if (ProjectConstant.onlineEnvSet
+				.contains(ProjectConstant.NAME_PROJECT_ENV)) {
 			try {
 				reader = new ZookeeperReader();
 			} catch (LinkPropertiesReaderInitException e) {

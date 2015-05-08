@@ -17,7 +17,8 @@ mail list:朱伟亮 \<zhuwl120820@gxwsxx.com>
 完善了说明文档README.md。<br>
 将配置文件log4j2.xml和spring-logging.xml从项目目录转移至tool-logging的包目录。<br>
 更改“自定义变量”使用“远程配置读取”方式的规则，["dev","test","real"]远程读取，其他则配置文件读取。<br>
-更改“全局变量”jsp获取方式
+更改“全局变量”jsp获取方式。<br>
+读取tool-common中的ProjectConstant.onlineEnvSet用于区别线上环境。<br>
  
 #### 修复：
  无
