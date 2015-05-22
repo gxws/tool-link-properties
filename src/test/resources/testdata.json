@@ -1,0 +1,24 @@
+[
+	{
+		"paramObj": 
+		{
+			"a1": "a",
+			"a2": "aa"
+		},
+		"assertObj": 
+		{
+			"result": "a"
+		}
+	},
+	{
+		"paramObj": 
+		{
+			"a1": "b",
+			"a2": "bb"
+		},
+		"assertObj": 
+		{
+			"result": "b"
+		}
+	}
+]

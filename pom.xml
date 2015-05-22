@@ -1,26 +1,111 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<parent>
-		<groupId>com.gxws</groupId>
-		<artifactId>top-config-project</artifactId>
-		<version>1.0.3-SNAPSHOT</version>
-	</parent>
+	<groupId>com.gxws</groupId>
 	<artifactId>tool-link-properties</artifactId>
 	<version>1.0.3-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<dependencies>
-		<dependency>
-			<groupId>org.apache.curator</groupId>
-			<artifactId>curator-framework</artifactId>
-		</dependency>
+	<properties>
+		<!-- gxws -->
+		<version.gxws.tool.common>1.0.3-SNAPSHOT</version.gxws.tool.common>
+		<version.gxws.tool.test>1.0.0-SNAPSHOT</version.gxws.tool.test>
 
+		<!-- spring framework -->
+		<version.springframework>4.1.6.RELEASE</version.springframework>
+
+		<!-- servlet -->
+		<version.servlet>3.1.0</version.servlet>
+
+		<!-- logging framework -->
+		<version.slf4j>1.7.10</version.slf4j>
+
+		<!-- zookeeper -->
+		<version.zookeeper.curator>2.7.1</version.zookeeper.curator>
+
+		<!-- maven plugin -->
+		<version.mvn.plugin.package.jar>2.6</version.mvn.plugin.package.jar>
+		<version.mvn.plugin.clean>2.6.1</version.mvn.plugin.clean>
+		<version.mvn.plugin.compile>3.2</version.mvn.plugin.compile>
+		<version.mvn.plugin.package.source>2.4</version.mvn.plugin.package.source>
+		<version.mvn.plugin.package.javadoc>2.10.2</version.mvn.plugin.package.javadoc>
+	</properties>
+
+	<dependencies>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-web</artifactId>
+			<version>${version.springframework}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>${version.servlet}</version>
 			<scope>provided</scope>
 		</dependency>
 
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>${version.slf4j}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.gxws</groupId>
+			<artifactId>tool-common</artifactId>
+			<version>${version.gxws.tool.common}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.curator</groupId>
+			<artifactId>curator-framework</artifactId>
+			<version>${version.zookeeper.curator}</version>
+		</dependency>
+		
+		<!-- <dependency>
+			<groupId>com.gxws</groupId>
+			<artifactId>tool-test</artifactId>
+			<version>${version.gxws.tool.test}</version>
+			<scope>test</scope>
+		</dependency> -->
 	</dependencies>
+
+	<build>
+		<plugins>
+			<!-- clean -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-clean-plugin</artifactId>
+				<version>${version.mvn.plugin.clean}</version>
+			</plugin>
+			<!-- compile -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>${version.mvn.plugin.compile}</version>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+					<encoding>UTF-8</encoding>
+				</configuration>
+			</plugin>
+			<!-- package -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<version>${version.mvn.plugin.package.source}</version>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>${version.mvn.plugin.package.jar}</version>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>${version.mvn.plugin.package.javadoc}</version>
+			</plugin>
+		</plugins>
+	</build>
 </project>

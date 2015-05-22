@@ -23,6 +23,16 @@ mail list:朱伟亮 \<zhuwl120820@gxwsxx.com>
 #### 修复：
  无
 
+## 1.1
+### 1.1.0
+#### 新功能：
+增加ctx为系统默认变量。<br>
+调整LinkPropertiesCore类的配置读取方式。<br>
+调整maven依赖配置，去除parent配置，改为使用原始配置。<br>
+
+#### 修复：
+ 无
+
 
 
 

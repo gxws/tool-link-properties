@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="default suite">
+
+	<test verbose="2" name="testng-ProjectPropertiesCoreTest">
+		<classes>
+			<class name="com.gxws.tool.link.properties.core.ProjectPropertiesCoreTest" />
+		</classes>
+	</test> <!-- Default test -->
+</suite> <!-- Default suite -->

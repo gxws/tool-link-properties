@@ -9,18 +9,22 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.gxws.tool.link.properties.annotation.LinkProperties;
-import com.gxws.tool.link.properties.info.Property;
+import com.gxws.tool.link.properties.datamodel.Property;
 
 /**
  * 类工具反射
  * 
- * @author zhuwl120820@gxwsxx.com
- *  2015年2月10日下午1:50:39
+ * @author zhuwl120820@gxwsxx.com 2015年2月10日下午1:50:39
+ * 
+ * @since 1.0
  *
  */
 public class ReflectClassTool implements ClassTool {
 	private Logger log = LoggerFactory.getLogger(getClass());
 
+	/**
+	 * @see com.gxws.tool.link.properties.classtool.ClassTool#forClasses(List)
+	 */
 	@Override
 	public List<Class<?>> forClasses(List<String> classnames) {
 		List<Class<?>> list = new ArrayList<>();
@@ -41,6 +45,9 @@ public class ReflectClassTool implements ClassTool {
 		return null;
 	}
 
+	/**
+	 * @see com.gxws.tool.link.properties.classtool.ClassTool#getProperty(Class)
+	 */
 	@Override
 	public List<Property> getProperty(Class<?> cls) {
 		List<Property> list = new ArrayList<>();
@@ -50,7 +57,7 @@ public class ReflectClassTool implements ClassTool {
 		fields = cls.getFields();
 		for (Field field : fields) {
 			lp = field.getAnnotation(LinkProperties.class);
-			if (null != lp) {
+			if (null != lp && Modifier.isStatic(field.getModifiers())) {
 				p = new Property();
 				if ("".equals(lp.value())) {
 					p.setPropertyKey(field.getName());
@@ -59,12 +66,24 @@ public class ReflectClassTool implements ClassTool {
 				}
 				p.setFieldName(field.getName());
 				p.setFullName(cls.getName() + "." + field.getName());
+				p.setClazz(cls);
+				try {
+					p.setValue(String.valueOf(field.get(null)));
+				} catch (IllegalArgumentException | IllegalAccessException e) {
+					log.error(
+							"获取值错误：在类：'" + cls.getName() + "' 字段名：'"
+									+ field.getName() + "'", e);
+				}
 				list.add(p);
 			}
 		}
 		return list;
 	}
 
+	/**
+	 * @see com.gxws.tool.link.properties.classtool.ClassTool#setProperty(Class,
+	 *      String, String)
+	 */
 	@Override
 	public void setProperty(Class<?> cls, String fieldName, String value) {
 		LinkProperties lp;
@@ -77,8 +96,17 @@ public class ReflectClassTool implements ClassTool {
 			}
 		} catch (NoSuchFieldException | SecurityException
 				| IllegalArgumentException | IllegalAccessException e) {
-			log.error("setting value '" + value + "' exception at class '"
-					+ cls.getName() + "' field name '" + fieldName + "'", e);
+			log.error("设置值错误：'" + value + "' 在类：'" + cls.getName() + "' 字段名：'"
+					+ fieldName + "'", e);
 		}
 	}
+
+	/**
+	 * @see com.gxws.tool.link.properties.classtool.ClassTool#setProperty(Property)
+	 */
+	@Override
+	public void setProperty(Property pro) {
+		setProperty(pro.getClazz(), pro.getFieldName(), pro.getValue());
+	}
+
 }
