@@ -24,7 +24,7 @@ mail list:朱伟亮 \<zhuwl120820@gxwsxx.com>
 ## 1.1
 ### 1.1.0
 #### 新功能：
-增加servlet context path为系统默认变量。调用方式为${contextPath}<br>
+增加servlet context path为系统默认变量。调用方式为${project.contextPath}<br>
 调整LinkPropertiesCore类的配置读取方式。<br>
 调整maven依赖配置，去除parent配置，改为使用原始配置。<br>
 

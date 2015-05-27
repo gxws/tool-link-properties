@@ -1,5 +1,6 @@
 package com.gxws.tool.link.properties.spring;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.beans.factory.config.PropertyPlaceholderConfigurer;
 import org.springframework.web.context.ServletContextAware;
 
+import com.gxws.tool.link.properties.core.IPropertiesCore;
 import com.gxws.tool.link.properties.core.LinkPropertiesCore;
 import com.gxws.tool.link.properties.core.ProjectPropertiesCore;
 
@@ -19,10 +21,8 @@ import com.gxws.tool.link.properties.core.ProjectPropertiesCore;
  * 将读取的配置信息加入servlet context<br>
  * 将读取的配置信息加入spring application context<br>
  * 
- * @author zhuwl120820@gxwsxx.com 2015年2月10日下午1:40:59
- * 
+ * @author zhuwl120820@gxwsxx.com
  * @since 1.0
- *
  */
 public class LinkPropertiesBean extends PropertyPlaceholderConfigurer implements
 		ServletContextAware {
@@ -37,16 +37,26 @@ public class LinkPropertiesBean extends PropertyPlaceholderConfigurer implements
 	protected void processProperties(
 			ConfigurableListableBeanFactory beanFactoryToProcess,
 			Properties props) throws BeansException {
-		// lpc.handle(constantClassnames, props, servletContext);
+		IPropertiesCore c = null;
+		List<IPropertiesCore> corelist = new ArrayList<>();
 		// 处理项目全局变量
-		ProjectPropertiesCore ppc = new ProjectPropertiesCore(servletContext);
-		ppc.servletContextPrpjectProperties(servletContext);
-		ppc.springProjectProperties(props);
-
+		c = new ProjectPropertiesCore(servletContext);
+		corelist.add(c);
 		// 处理项目自定义变量
-		LinkPropertiesCore lpc = new LinkPropertiesCore(constantClassnames);
-		lpc.servletContextPrpjectProperties(servletContext);
-		lpc.springProjectProperties(props);
+		c = new LinkPropertiesCore(constantClassnames);
+		corelist.add(c);
+		for (IPropertiesCore core : corelist) {
+			core.servletContextProperties(servletContext);
+			core.springProperties(props);
+		}
+		// 处理项目全局变量
+		// IPropertiesCore ppc = new ProjectPropertiesCore(servletContext);
+		// ppc.servletContextProperties(servletContext);
+		// ppc.springProperties(props);
+		// 处理项目自定义变量
+		// IPropertiesCore lpc = new LinkPropertiesCore(constantClassnames);
+		// lpc.servletContextProperties(servletContext);
+		// lpc.springProperties(props);
 		super.processProperties(beanFactoryToProcess, props);
 	}
 

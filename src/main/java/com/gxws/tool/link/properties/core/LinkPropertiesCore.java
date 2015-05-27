@@ -28,7 +28,7 @@ import com.gxws.tool.link.properties.reader.ZookeeperReader;
  * @author zhuwl120820@gxwsxx.com
  * @since 1.0
  */
-public class LinkPropertiesCore {
+public class LinkPropertiesCore implements IPropertiesCore {
 
 	private Logger log = LoggerFactory.getLogger(getClass());
 
@@ -242,7 +242,8 @@ public class LinkPropertiesCore {
 	 *
 	 * @since 1.1
 	 */
-	public void springProjectProperties(Properties props) {
+	@Override
+	public void springProperties(Properties props) {
 		for (Property p : propertySet) {
 			props.put(p.getPropertyKey(), p.getValue());
 		}
@@ -257,7 +258,8 @@ public class LinkPropertiesCore {
 	 *
 	 * @since 1.1
 	 */
-	public void servletContextPrpjectProperties(ServletContext servletContext) {
+	@Override
+	public void servletContextProperties(ServletContext servletContext) {
 		for (Property p : propertySet) {
 			servletContext.setAttribute(p.getFieldName(), p.getValue());
 		}

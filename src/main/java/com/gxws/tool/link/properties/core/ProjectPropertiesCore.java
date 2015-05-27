@@ -23,7 +23,7 @@ import com.gxws.tool.common.constant.ProjectConstant;
  * @author zhuwl120820@gxwsxx.com
  * @since 1.0
  */
-public class ProjectPropertiesCore {
+public class ProjectPropertiesCore implements IPropertiesCore {
 
 	private Logger log = LoggerFactory.getLogger(getClass());
 
@@ -176,7 +176,8 @@ public class ProjectPropertiesCore {
 	 *            spring配置读取的Properties对象
 	 * @since 1.1
 	 */
-	public void springProjectProperties(Properties props) {
+	@Override
+	public void springProperties(Properties props) {
 		props.putAll(pc.getAll());
 	}
 
@@ -188,7 +189,8 @@ public class ProjectPropertiesCore {
 	 *            ServletContext对象
 	 * @since 1.1
 	 */
-	public void servletContextPrpjectProperties(ServletContext servletContext) {
+	@Override
+	public void servletContextProperties(ServletContext servletContext) {
 		Map<String, String> map = pc.getAll();
 		for (Entry<String, String> en : map.entrySet()) {
 			servletContext.setAttribute(en.getKey(), en.getValue());
