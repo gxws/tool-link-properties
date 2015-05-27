@@ -8,7 +8,7 @@
 
 	<properties>
 		<!-- gxws -->
-		<version.gxws.tool.common>1.0.3-SNAPSHOT</version.gxws.tool.common>
+		<version.gxws.tool.common>1.1.0-RELEASE</version.gxws.tool.common>
 		<version.gxws.tool.test>1.0.0-SNAPSHOT</version.gxws.tool.test>
 
 		<!-- spring framework -->

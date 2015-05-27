@@ -20,19 +20,13 @@ mail list:朱伟亮 \<zhuwl120820@gxwsxx.com>
 更改“全局变量”jsp获取方式。<br>
 读取tool-common中的ProjectConstant.onlineEnvSet用于区别线上环境。<br>
  
-#### 修复：
- 无
 
 ## 1.1
 ### 1.1.0
 #### 新功能：
-增加ctx为系统默认变量。<br>
+增加servlet context path为系统默认变量。调用方式为${contextPath}<br>
 调整LinkPropertiesCore类的配置读取方式。<br>
 调整maven依赖配置，去除parent配置，改为使用原始配置。<br>
-
-#### 修复：
- 无
-
 
 
 
@@ -102,9 +96,6 @@ mail list:朱伟亮 \<zhuwl120820@gxwsxx.com>
 ##### redis
 计划扩展，暂不支持
 
-
-
-
 依赖关系
 ---
 ### 1、服务依赖
@@ -117,7 +108,6 @@ mail list:朱伟亮 \<zhuwl120820@gxwsxx.com>
 org.springframework spring-web 4.1<br>
 com.gxws tool-common 1.0.1<br>
 org.apache.curator curator-framework 2.7<br>
-
 
 使用方式
 ---

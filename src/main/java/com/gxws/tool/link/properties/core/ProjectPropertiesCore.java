@@ -20,7 +20,7 @@ import com.gxws.tool.common.constant.ProjectConstant;
 /**
  * 处理项目全局变量
  * 
- * @author zhuwl120820@gxwsxx.com 2015年3月12日下午3:11:05
+ * @author zhuwl120820@gxwsxx.com
  * @since 1.0
  */
 public class ProjectPropertiesCore {
@@ -42,7 +42,6 @@ public class ProjectPropertiesCore {
 	 * port:项目运行web容器(tomcat)启动参数-Dproject.port。<br>
 	 * 
 	 * @author zhuwl120820@gxwsxx.com
-	 *
 	 * @since 1.1
 	 */
 	public ProjectPropertiesCore(ServletContext servletContext) {
@@ -52,6 +51,7 @@ public class ProjectPropertiesCore {
 				.getInitParameter(ProjectConstant.NAME_PROJECT_VERSION));
 		pc.setIp(ips());
 		pc.setPort(System.getProperty(ProjectConstant.NAME_PROJECT_PORT));
+		pc.setContextPath(servletContext.getContextPath());
 	}
 
 	/**
@@ -63,7 +63,6 @@ public class ProjectPropertiesCore {
 	 * port:读取配置文件中的项project.port。<br>
 	 * 
 	 * @author zhuwl120820@gxwsxx.com
-	 *
 	 * @since 1.1
 	 */
 	public ProjectPropertiesCore() {
@@ -73,87 +72,89 @@ public class ProjectPropertiesCore {
 		pc.setVersion(pro.getString(ProjectConstant.NAME_PROJECT_VERSION));
 		pc.setIp(ips());
 		pc.setPort(pro.getString(ProjectConstant.NAME_PROJECT_PORT));
+		pc.setContextPath(pro
+				.getString(ProjectConstant.NAME_PROJECT_CONTEXT_PATH));
 	}
 
-	/**
-	 * 设置项目全局变量
-	 * 
-	 * @author zhuwl120820@gxwsxx.com 2015年3月12日下午3:12:04
-	 * 
-	 * @deprecated 已废弃，
-	 *             使用springProjectProperties和servletContextPrpjectProperties
-	 *             ，分别获取相应的项目全局变量 。
-	 * 
-	 * @param servletContext
-	 *            从interceptor获取的servlet context对象
-	 * @param props
-	 *            从spring bean factory获取的Properties对象
-	 * 
-	 * @since 1.1
-	 */
-	@Deprecated
-	public void handle(ServletContext servletContext, Properties props) {
-		// /**
-		// * 获取值
-		// */
-		// String env = System.getProperty(ProjectConstant.NAME_PROJECT_ENV);
-		// if (null == env || "".equals(env)) {
-		// env = ENV_DEFAULT_VALUE;
-		// }
-		// ProjectConstant.VALUE_PROJECT_ENV = env;
-		// ProjectConstant.put(ProjectConstant.NAME_PROJECT_ENV,
-		// ProjectConstant.VALUE_PROJECT_ENV);
-		//
-		// ProjectConstant.VALUE_PROJECT_NAME = servletContext
-		// .getServletContextName();
-		// ProjectConstant.put(ProjectConstant.NAME_PROJECT_NAME,
-		// ProjectConstant.VALUE_PROJECT_NAME);
-		//
-		// ProjectConstant.VALUE_PROJECT_VERSION = servletContext
-		// .getInitParameter(ProjectConstant.NAME_PROJECT_VERSION);
-		// ProjectConstant.put(ProjectConstant.NAME_PROJECT_VERSION,
-		// ProjectConstant.VALUE_PROJECT_VERSION);
-		//
-		// ProjectConstant.VALUE_PROJECT_IP = ips();
-		// ProjectConstant.put(ProjectConstant.NAME_PROJECT_IP,
-		// ProjectConstant.VALUE_PROJECT_IP);
-		//
-		// String port = System.getProperty(ProjectConstant.NAME_PROJECT_PORT);
-		// if (null == port || "".equals(port)) {
-		// port = PORT_DEFAULT_VALUE;
-		// }
-		// ProjectConstant.VALUE_PROJECT_PORT = port;
-		// ProjectConstant.put(ProjectConstant.NAME_PROJECT_PORT,
-		// ProjectConstant.VALUE_PROJECT_PORT);
-		/**
-		 * 获取值
-		 */
-		ProjectConstant pc = ProjectConstant.instance();
-		pc.setEnv(System.getProperty(ProjectConstant.NAME_PROJECT_ENV));
-		pc.setName(servletContext.getServletContextName());
-		pc.setVersion(servletContext
-				.getInitParameter(ProjectConstant.NAME_PROJECT_VERSION));
-		pc.setIp(ips());
-		pc.setPort(System.getProperty(ProjectConstant.NAME_PROJECT_PORT));
-		/**
-		 * 将值放入servlet context
-		 */
-		for (String k : pc.getAll().keySet()) {
-			servletContext.setAttribute(k, ProjectConstant.get(k));
-		}
-		servletContext.setAttribute("project", pc);
-
-		/**
-		 * 将值放入spring properties
-		 */
-		if (null == pc.getAll()) {
-			System.out.println("pc.getAll() is null");
-		}
-		if (null == props) {
-			System.out.println("props is null");
-		}
-		props.putAll(pc.getAll());
-	}
+	// /**
+	// * 设置项目全局变量
+	// *
+	// * @author zhuwl120820@gxwsxx.com 2015年3月12日下午3:12:04
+	// *
+	// * @deprecated 已废弃，
+	// * 使用springProjectProperties和servletContextPrpjectProperties
+	// * ，分别获取相应的项目全局变量 。
+	// *
+	// * @param servletContext
+	// * 从interceptor获取的servlet context对象
+	// * @param props
+	// * 从spring bean factory获取的Properties对象
+	// *
+	// * @since 1.1
+	// */
+	// @Deprecated
+	// public void handle(ServletContext servletContext, Properties props) {
+	// // /**
+	// // * 获取值
+	// // */
+	// // String env = System.getProperty(ProjectConstant.NAME_PROJECT_ENV);
+	// // if (null == env || "".equals(env)) {
+	// // env = ENV_DEFAULT_VALUE;
+	// // }
+	// // ProjectConstant.VALUE_PROJECT_ENV = env;
+	// // ProjectConstant.put(ProjectConstant.NAME_PROJECT_ENV,
+	// // ProjectConstant.VALUE_PROJECT_ENV);
+	// //
+	// // ProjectConstant.VALUE_PROJECT_NAME = servletContext
+	// // .getServletContextName();
+	// // ProjectConstant.put(ProjectConstant.NAME_PROJECT_NAME,
+	// // ProjectConstant.VALUE_PROJECT_NAME);
+	// //
+	// // ProjectConstant.VALUE_PROJECT_VERSION = servletContext
+	// // .getInitParameter(ProjectConstant.NAME_PROJECT_VERSION);
+	// // ProjectConstant.put(ProjectConstant.NAME_PROJECT_VERSION,
+	// // ProjectConstant.VALUE_PROJECT_VERSION);
+	// //
+	// // ProjectConstant.VALUE_PROJECT_IP = ips();
+	// // ProjectConstant.put(ProjectConstant.NAME_PROJECT_IP,
+	// // ProjectConstant.VALUE_PROJECT_IP);
+	// //
+	// // String port = System.getProperty(ProjectConstant.NAME_PROJECT_PORT);
+	// // if (null == port || "".equals(port)) {
+	// // port = PORT_DEFAULT_VALUE;
+	// // }
+	// // ProjectConstant.VALUE_PROJECT_PORT = port;
+	// // ProjectConstant.put(ProjectConstant.NAME_PROJECT_PORT,
+	// // ProjectConstant.VALUE_PROJECT_PORT);
+	// /**
+	// * 获取值
+	// */
+	// ProjectConstant pc = ProjectConstant.instance();
+	// pc.setEnv(System.getProperty(ProjectConstant.NAME_PROJECT_ENV));
+	// pc.setName(servletContext.getServletContextName());
+	// pc.setVersion(servletContext
+	// .getInitParameter(ProjectConstant.NAME_PROJECT_VERSION));
+	// pc.setIp(ips());
+	// pc.setPort(System.getProperty(ProjectConstant.NAME_PROJECT_PORT));
+	// /**
+	// * 将值放入servlet context
+	// */
+	// for (String k : pc.getAll().keySet()) {
+	// servletContext.setAttribute(k, ProjectConstant.get(k));
+	// }
+	// servletContext.setAttribute("project", pc);
+	//
+	// /**
+	// * 将值放入spring properties
+	// */
+	// if (null == pc.getAll()) {
+	// System.out.println("pc.getAll() is null");
+	// }
+	// if (null == props) {
+	// System.out.println("props is null");
+	// }
+	// props.putAll(pc.getAll());
+	// }
 
 	/**
 	 * 获取项目全局变量参数
@@ -173,7 +174,6 @@ public class ProjectPropertiesCore {
 	 * @author zhuwl120820@gxwsxx.com
 	 * @param props
 	 *            spring配置读取的Properties对象
-	 *
 	 * @since 1.1
 	 */
 	public void springProjectProperties(Properties props) {
@@ -186,7 +186,6 @@ public class ProjectPropertiesCore {
 	 * @author zhuwl120820@gxwsxx.com
 	 * @param servletContext
 	 *            ServletContext对象
-	 *
 	 * @since 1.1
 	 */
 	public void servletContextPrpjectProperties(ServletContext servletContext) {
@@ -200,10 +199,8 @@ public class ProjectPropertiesCore {
 	/**
 	 * 获取网卡IP地址
 	 * 
-	 * @author zhuwl120820@gxwsxx.com 2015年3月12日下午2:30:52
-	 * 
+	 * @author zhuwl120820@gxwsxx.com
 	 * @return ip地址，以","分隔
-	 * 
 	 * @since 1.0
 	 */
 	private String ips() {
