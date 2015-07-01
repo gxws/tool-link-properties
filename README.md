@@ -10,25 +10,17 @@ mail list:朱伟亮 \<zhuwl120820@gxwsxx.com>
 
 版本变更说明
 ---
-# 1
-## 1.0
 ### 1.0.3
-#### 新功能：
 完善了说明文档README.md。<br>
 将配置文件log4j2.xml和spring-logging.xml从项目目录转移至tool-logging的包目录。<br>
 更改“自定义变量”使用“远程配置读取”方式的规则，["dev","test","real"]远程读取，其他则配置文件读取。<br>
 更改“全局变量”jsp获取方式。<br>
 读取tool-common中的ProjectConstant.onlineEnvSet用于区别线上环境。<br>
  
-
-## 1.1
 ### 1.1.0
-#### 新功能：
 增加servlet context path为系统默认变量。调用方式为${project.contextPath}<br>
 调整LinkPropertiesCore类的配置读取方式。<br>
 调整maven依赖配置，去除parent配置，改为使用原始配置。<br>
-
-
 
 功能点
 ---
