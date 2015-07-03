@@ -31,8 +31,6 @@ public class LinkPropertiesBean extends PropertyPlaceholderConfigurer implements
 
 	private ServletContext servletContext;
 
-	// LinkPropertiesCore lpc = new LinkPropertiesCore();
-
 	@Override
 	protected void processProperties(
 			ConfigurableListableBeanFactory beanFactoryToProcess,
@@ -49,14 +47,6 @@ public class LinkPropertiesBean extends PropertyPlaceholderConfigurer implements
 			core.servletContextProperties(servletContext);
 			core.springProperties(props);
 		}
-		// 处理项目全局变量
-		// IPropertiesCore ppc = new ProjectPropertiesCore(servletContext);
-		// ppc.servletContextProperties(servletContext);
-		// ppc.springProperties(props);
-		// 处理项目自定义变量
-		// IPropertiesCore lpc = new LinkPropertiesCore(constantClassnames);
-		// lpc.servletContextProperties(servletContext);
-		// lpc.springProperties(props);
 		super.processProperties(beanFactoryToProcess, props);
 	}
 

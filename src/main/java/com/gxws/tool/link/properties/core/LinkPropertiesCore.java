@@ -34,17 +34,11 @@ public class LinkPropertiesCore implements IPropertiesCore {
 
 	private ClassTool ct = new ReflectClassTool();
 
-	// @Deprecated
-	// private ProjectPropertiesCore ppc;
-
 	private List<Class<?>> constantClassList = new ArrayList<Class<?>>();
 
 	private Reader reader;
 
 	private Set<Property> propertySet;
-
-	// private final Set<String> envRemoteSet = new HashSet<String>(
-	// Arrays.asList(new String[] { "dev", "test", "real" }));
 
 	/**
 	 * 指定静态类，参数以List方式指定
@@ -101,6 +95,7 @@ public class LinkPropertiesCore implements IPropertiesCore {
 				try {
 					String value = reader.valueString(p.getPropertyKey());
 					if (null != value) {
+						p.setValue(value);
 						propertySet.add(p);
 						ct.setProperty(p);
 					}
@@ -161,77 +156,6 @@ public class LinkPropertiesCore implements IPropertiesCore {
 	public void addAllConstantClass(List<Class<?>> clsList) {
 		constantClassList.addAll(clsList);
 	}
-
-	// /**
-	// * 处理自定义变量
-	// *
-	// * @deprecated
-	// * 已废弃，使用springProjectProperties和servletContextPrpjectProperties，
-	// * 分别获取相应的项目自定义变量 。
-	// *
-	// * @param classnames
-	// * 所有类名
-	// * @param props
-	// * 从spring bean factory获取的Properties对象
-	// * @param servletContext
-	// * servletContext 从interceptor获取的servlet上下文
-	// * @since 1.0
-	// */
-	// @Deprecated
-	// public void handle(List<String> classnames, Properties props,
-	// ServletContext servletContext) {
-	// ppc = new ProjectPropertiesCore();
-	// ppc.handle(servletContext, props);
-	// List<Class<?>> classList = ct.forClasses(classnames);
-	// Reader reader;
-	// // if (ProjectPropertiesCore.ENV_DEFAULT_VALUE
-	// // .equals(ProjectConstant.NAME_PROJECT_ENV)) {
-	// // try {
-	// // reader = new FileReader();
-	// // } catch (LinkPropertiesReaderInitException e) {
-	// // log.error("can not find 'link properties' resource", e);
-	// // return;
-	// // }
-	// // } else {
-	// // try {
-	// // reader = new ZookeeperReader();
-	// // } catch (LinkPropertiesReaderInitException e) {
-	// // log.error("can not find 'link properties' resource", e);
-	// // return;
-	// // }
-	// // }
-	// if (ProjectConstant.onlineEnvSet
-	// .contains(ProjectConstant.NAME_PROJECT_ENV)) {
-	// try {
-	// reader = new ZookeeperReader();
-	// } catch (LinkPropertiesReaderInitException e) {
-	// log.error("can not find 'link properties' resource", e);
-	// return;
-	// }
-	// } else {
-	// try {
-	// reader = new FileReader();
-	// } catch (LinkPropertiesReaderInitException e) {
-	// log.error("can not find 'link properties' resource", e);
-	// return;
-	// }
-	// }
-	// for (Class<?> cls : classList) {
-	// for (Property p : ct.getProperty(cls)) {
-	// try {
-	// String value = reader.valueString(p.getPropertyKey());
-	// if (null != value) {
-	// props.put(p.getPropertyKey(), value);
-	// ct.setProperty(cls, p.getFieldName(), value);
-	// }
-	// servletContext.setAttribute(p.getFieldName(), value);
-	// } catch (LinkPropertiesBaseException e) {
-	// log.error(e.getMessage(), e);
-	// continue;
-	// }
-	// }
-	// }
-	// }
 
 	/**
 	 * 设置自定义变量到spring配置
