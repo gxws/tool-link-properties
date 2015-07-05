@@ -21,8 +21,8 @@ mail list:朱伟亮 \<zhuwl120820@gxwsxx.com>
 增加servlet context path为系统默认变量。调用方式为${project.contextPath}<br>
 调整LinkPropertiesCore类的配置读取方式。<br>
 调整maven依赖配置，去除parent配置，改为使用原始配置。<br>
-调整自定义变量的读取方式，以文件的propertyKey为定义读取。<br>
 加入了输出一些logger debug信息。<br>
+调整了project.name和project.version的读取方式，改为读取maven信息。<br>
 
 功能点
 ---

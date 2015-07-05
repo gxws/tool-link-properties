@@ -10,8 +10,7 @@ import com.gxws.tool.link.properties.exception.LinkPropertiesValueException;
 /**
  * 从link.properties获取配置信息
  * 
- * @author zhuwl120820@gxwsxx.com
- *  2015年2月10日上午11:59:16
+ * @author zhuwl120820@gxwsxx.com 2015年2月10日上午11:59:16
  *
  */
 public class FileReader implements Reader {
@@ -23,7 +22,7 @@ public class FileReader implements Reader {
 	/**
 	 * @author zhuwl120820@gxwsxx.com
 	 * @throws LinkPropertiesReaderInitException
-	 *  2015年3月12日上午11:55:37
+	 *             2015年3月12日上午11:55:37
 	 * 
 	 */
 	public FileReader() throws LinkPropertiesReaderInitException {
@@ -42,13 +41,13 @@ public class FileReader implements Reader {
 			throws LinkPropertiesBaseException {
 		if (propertyKey == null) {
 			LinkPropertiesKeyException e = new LinkPropertiesKeyException();
-			e.setMessage("property key is null");
+			e.setMessage("属性名为null");
 			throw e;
 		} else {
 			String k = propertyKey.trim();
 			if ("".equals(k)) {
 				LinkPropertiesKeyException e = new LinkPropertiesKeyException();
-				e.setMessage("property key is not null but empty");
+				e.setMessage("属性名不是null，但是值为空");
 				throw e;
 			} else {
 				try {
@@ -56,8 +55,7 @@ public class FileReader implements Reader {
 				} catch (Exception e1) {
 					LinkPropertiesValueException e = new LinkPropertiesValueException();
 					e.setStackTrace(e1.getStackTrace());
-					e.setMessage("property key '" + k
-							+ "' value reading exception , probable not exist");
+					e.setMessage("属性名 '" + k + "' 的值读取异常 , 检查值是否正确配置");
 					throw e;
 				}
 			}

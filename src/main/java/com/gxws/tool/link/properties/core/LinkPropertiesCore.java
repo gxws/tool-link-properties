@@ -68,14 +68,14 @@ public class LinkPropertiesCore implements IPropertiesCore {
 			try {
 				reader = new ZookeeperReader();
 			} catch (LinkPropertiesReaderInitException e) {
-				log.error("can not find 'link properties' resource", e);
+				log.error("找不到 'link properties' 资源", e);
 				return;
 			}
 		} else {
 			try {
 				reader = new FileReader();
 			} catch (LinkPropertiesReaderInitException e) {
-				log.error("can not find 'link properties' resource", e);
+				log.error("找不到 'link properties' 资源", e);
 				return;
 			}
 		}
@@ -104,6 +104,9 @@ public class LinkPropertiesCore implements IPropertiesCore {
 					continue;
 				}
 			}
+		}
+		for (Property p : propertySet) {
+			log.debug("项目自定义变量加载 " + p.getPropertyKey() + " = " + p.getValue());
 		}
 	}
 
