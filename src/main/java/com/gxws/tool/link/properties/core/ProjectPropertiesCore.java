@@ -115,7 +115,7 @@ public class ProjectPropertiesCore implements IPropertiesCore {
 						en -> servletContext.setAttribute(en.getKey(),
 								en.getValue()));
 		servletContext.setAttribute("project", pc);
-
+		servletContext.setAttribute("ctx", pc.getContextPath());
 	}
 
 	/**

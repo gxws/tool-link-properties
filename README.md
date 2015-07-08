@@ -25,6 +25,9 @@ mail list:朱伟亮 \<zhuwl120820@gxwsxx.com>
 调整了project.name和project.version的读取方式，改为读取maven信息。<br>
 spring framework版本修改为4.1.7.RELEASE。<br>
 
+### 1.1.1
+增加了一个servlet context path系统变量别名。调用方式为${ctx}。<br>
+
 功能点
 ---
 ### 1、项目启动时初始化“全局变量”配置
