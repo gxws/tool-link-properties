@@ -27,6 +27,7 @@ spring framework版本修改为4.1.7.RELEASE。<br>
 
 ### 1.1.1
 增加了一个servlet context path系统变量别名。调用方式为${ctx}。<br>
+修复了项目启动时没有servlet context的空指针异常。<br>
 
 功能点
 ---

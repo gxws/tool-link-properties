@@ -187,8 +187,10 @@ public class LinkPropertiesCore implements IPropertiesCore {
 	 */
 	@Override
 	public void servletContextProperties(ServletContext servletContext) {
-		for (Property p : propertySet) {
-			servletContext.setAttribute(p.getFieldName(), p.getValue());
+		if (null != servletContext) {
+			for (Property p : propertySet) {
+				servletContext.setAttribute(p.getFieldName(), p.getValue());
+			}
 		}
 	}
 }

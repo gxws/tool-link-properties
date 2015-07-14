@@ -56,19 +56,21 @@ public class ProjectPropertiesCore implements IPropertiesCore {
 	 */
 	private void readPropertiesProperties() {
 		pc.setEnv(System.getProperty(ProjectConstant.NAME_PROJECT_ENV));
-		Properties p = new Properties();
-		InputStream is;
-		try {
-			is = new FileInputStream(mavenPropertiesPath());
-			p.load(is);
-			pc.setName(p.getProperty("artifactId"));
-			pc.setVersion(p.getProperty("version"));
-		} catch (IOException e) {
-			e.printStackTrace();
+		if (null != sc) {
+			Properties p = new Properties();
+			InputStream is;
+			try {
+				is = new FileInputStream(mavenPropertiesPath());
+				p.load(is);
+				pc.setName(p.getProperty("artifactId"));
+				pc.setVersion(p.getProperty("version"));
+			} catch (IOException e) {
+				log.error(e.getMessage(), e);
+			}
+			pc.setContextPath(sc.getContextPath());
 		}
 		pc.setIp(ips());
 		pc.setPort(System.getProperty(ProjectConstant.NAME_PROJECT_PORT));
-		pc.setContextPath(sc.getContextPath());
 		for (Entry<String, String> en : pc.getAll().entrySet()) {
 			log.debug("项目全局变量加载 " + en.getKey() + " = " + en.getValue());
 		}
@@ -109,13 +111,15 @@ public class ProjectPropertiesCore implements IPropertiesCore {
 	 */
 	@Override
 	public void servletContextProperties(ServletContext servletContext) {
-		pc.getAll()
-				.entrySet()
-				.forEach(
-						en -> servletContext.setAttribute(en.getKey(),
-								en.getValue()));
-		servletContext.setAttribute("project", pc);
-		servletContext.setAttribute("ctx", pc.getContextPath());
+		if (null != servletContext) {
+			pc.getAll()
+					.entrySet()
+					.forEach(
+							en -> servletContext.setAttribute(en.getKey(),
+									en.getValue()));
+			servletContext.setAttribute("project", pc);
+			servletContext.setAttribute("ctx", pc.getContextPath());
+		}
 	}
 
 	/**
