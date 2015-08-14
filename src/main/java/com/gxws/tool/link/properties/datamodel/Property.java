@@ -1,34 +1,32 @@
 package com.gxws.tool.link.properties.datamodel;
 
+import java.util.Set;
+
 /**
  * 配置项的相关信息
  * 
  * @author zhuwl120820@gxwsxx.com 2015年2月10日下午5:11:57
  * 
  * @since 1.0
- *
  */
 public class Property {
+	// 读取的配置名
+	private String propertyKey;
 
-	private String propertyKey;// 读取的配置名
+	// 配置类字段名
+	private String fieldName;
 
-	private String fieldName;// 配置类字段名
+	// 配置字段全名（包名+类名+字段名）
+	private String fullName;
 
-	private String fullName;// 配置字段全名（包名+类名+字段名）
+	// 配置值
+	private String value;
 
-	private String value;// 配置值
+	// 对应的class对象
+	private Class<?> clazz;
 
-	private Class<?> clazz; // 对应的class对象
-
-	// private boolean contextScope;// 变量是否需要添加到web application context
-
-	// public boolean isContextScope() {
-	// return contextScope;
-	// }
-	//
-	// public void setContextScope(boolean contextScope) {
-	// this.contextScope = contextScope;
-	// }
+	// 配置项在servlet context中的属性名集合
+	private Set<String> servletContextAttrNames;
 
 	public String getFieldName() {
 		return fieldName;
@@ -68,6 +66,14 @@ public class Property {
 
 	public void setClazz(Class<?> clazz) {
 		this.clazz = clazz;
+	}
+
+	public Set<String> getServletContextAttrNames() {
+		return servletContextAttrNames;
+	}
+
+	public void setServletContextAttrNames(Set<String> servletContextAttrNames) {
+		this.servletContextAttrNames = servletContextAttrNames;
 	}
 
 }

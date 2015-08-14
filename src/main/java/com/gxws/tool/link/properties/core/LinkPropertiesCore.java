@@ -215,6 +215,16 @@ public class LinkPropertiesCore implements IPropertiesCore {
 	public void servletContextProperties(ServletContext servletContext) {
 		if (null != servletContext) {
 			for (Property p : propertySet) {
+				if (!p.getServletContextAttrNames().isEmpty()) {
+					Set<String> attrNames = p.getServletContextAttrNames();
+					for (String an : attrNames) {
+						if (an.isEmpty()) {
+							continue;
+						} else {
+							servletContext.setAttribute(an, p.getValue());
+						}
+					}
+				}
 				servletContext.setAttribute(p.getFieldName(), p.getValue());
 			}
 		}

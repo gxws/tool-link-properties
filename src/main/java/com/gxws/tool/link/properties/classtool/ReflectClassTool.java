@@ -3,7 +3,10 @@ package com.gxws.tool.link.properties.classtool;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -54,12 +57,13 @@ public class ReflectClassTool implements ClassTool {
 		Field[] fields = null;
 		LinkProperties lp = null;
 		Property p = null;
+		Set<String> set = null;
 		fields = cls.getFields();
 		for (Field field : fields) {
 			lp = field.getAnnotation(LinkProperties.class);
 			if (null != lp && Modifier.isStatic(field.getModifiers())) {
 				p = new Property();
-				if ("".equals(lp.value())) {
+				if (lp.value().isEmpty()) {
 					p.setPropertyKey(field.getName());
 				} else {
 					p.setPropertyKey(lp.value());
@@ -67,12 +71,12 @@ public class ReflectClassTool implements ClassTool {
 				p.setFieldName(field.getName());
 				p.setFullName(cls.getName() + "." + field.getName());
 				p.setClazz(cls);
+				set = new HashSet<>(Arrays.asList(lp.servletContextAttrNames()));
+				p.setServletContextAttrNames(set);
 				try {
 					p.setValue(String.valueOf(field.get(null)));
 				} catch (IllegalArgumentException | IllegalAccessException e) {
-					log.error(
-							"获取值错误：在类：'" + cls.getName() + "' 字段名：'"
-									+ field.getName() + "'", e);
+					log.error("获取值错误：在类：'" + cls.getName() + "' 字段名：'" + field.getName() + "'", e);
 				}
 				list.add(p);
 			}
@@ -94,10 +98,8 @@ public class ReflectClassTool implements ClassTool {
 			if (null != lp && Modifier.isStatic(field.getModifiers())) {
 				field.set(null, value);
 			}
-		} catch (NoSuchFieldException | SecurityException
-				| IllegalArgumentException | IllegalAccessException e) {
-			log.error("设置值错误：'" + value + "' 在类：'" + cls.getName() + "' 字段名：'"
-					+ fieldName + "'", e);
+		} catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException e) {
+			log.error("设置值错误：'" + value + "' 在类：'" + cls.getName() + "' 字段名：'" + fieldName + "'", e);
 		}
 	}
 
