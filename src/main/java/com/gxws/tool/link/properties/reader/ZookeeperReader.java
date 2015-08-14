@@ -11,10 +11,10 @@ import com.gxws.tool.common.constant.ProjectConstant;
 import com.gxws.tool.link.properties.exception.LinkPropertiesReaderInitException;
 
 /**
- * 通过zookeeper获取配置信息
+ * 通过zookeeper实现的配置源中获取配置信息
  * 
- * @author zhuwl120820@gxwsxx.com 2015年2月10日下午2:37:19
- *
+ * @author zhuwl120820@gxwsxx.com
+ * @since 1.0
  */
 public class ZookeeperReader implements RemoteReader {
 
@@ -27,17 +27,17 @@ public class ZookeeperReader implements RemoteReader {
 	private CuratorFramework cf;
 
 	/**
+	 * 创建ZookeeperReader实例
+	 * 
 	 * @author zhuwl120820@gxwsxx.com
 	 * @throws LinkPropertiesReaderInitException
-	 *             2015年3月12日下午12:02:01
-	 * 
+	 *             配置读取对象初始化异常
+	 * @since 1.0
 	 */
 	public ZookeeperReader() throws LinkPropertiesReaderInitException {
 		try {
-			Builder builder = CuratorFrameworkFactory.builder()
-					.connectString(DEFAULT_ADDR_ZOOKEEPER)
-					.connectionTimeoutMs(5000).sessionTimeoutMs(5000)
-					.retryPolicy(new ExponentialBackoffRetry(1000, 3));
+			Builder builder = CuratorFrameworkFactory.builder().connectString(DEFAULT_ADDR_ZOOKEEPER)
+					.connectionTimeoutMs(5000).sessionTimeoutMs(5000).retryPolicy(new ExponentialBackoffRetry(1000, 3));
 			builder.namespace(DEFAULT_NAMESPACE);
 			cf = builder.build();
 			cf.start();
@@ -50,13 +50,13 @@ public class ZookeeperReader implements RemoteReader {
 		}
 	}
 
+	/**
+	 * @see com.gxws.tool.link.properties.reader.Reader#valueString(java.lang.String)
+	 */
 	@Override
 	public String valueString(String propertyKey) {
-		// String path = "/" + ProjectConstant.VALUE_PROJECT_ENV + "/"
-		// + ProjectConstant.VALUE_PROJECT_NAME + "/" + propertyKey;
 		ProjectConstant pc = ProjectConstant.instance();
-		String path = "/" + pc.getEnv() + "/" + pc.getName() + "/"
-				+ propertyKey;
+		String path = "/" + pc.getEnv() + "/" + pc.getName() + "/" + propertyKey;
 		try {
 			return new String(cf.getData().forPath(path), "utf-8");
 		} catch (Exception e) {

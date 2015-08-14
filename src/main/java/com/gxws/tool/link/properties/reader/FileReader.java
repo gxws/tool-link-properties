@@ -8,16 +8,17 @@ import com.gxws.tool.link.properties.exception.LinkPropertiesReaderInitException
 import com.gxws.tool.link.properties.exception.LinkPropertiesValueException;
 
 /**
- * 从link.properties获取配置信息
+ * 从本地文件配置源中获取配置信息
  * 
- * @author zhuwl120820@gxwsxx.com 2015年2月10日上午11:59:16
- *
+ * @author zhuwl120820@gxwsxx.com
+ * @since 1.0
  */
 public class FileReader implements Reader {
 
 	private ResourceBundle linkFile = null;
 
-	private final String LINK_FILE_NAME = "link";
+	// 文件名为link.properties
+	private static final String LINK_FILE_NAME = "link";
 
 	/**
 	 * @author zhuwl120820@gxwsxx.com
@@ -37,8 +38,7 @@ public class FileReader implements Reader {
 	}
 
 	@Override
-	public String valueString(String propertyKey)
-			throws LinkPropertiesBaseException {
+	public String valueString(String propertyKey) throws LinkPropertiesBaseException {
 		if (propertyKey == null) {
 			LinkPropertiesKeyException e = new LinkPropertiesKeyException();
 			e.setMessage("属性名为null");

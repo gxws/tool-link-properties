@@ -1,11 +1,10 @@
 package com.gxws.tool.link.properties.reader;
 
 /**
- * 远程读取配置信息
+ * 从远程的配置源读取配置信息
  * 
  * @author zhuwl120820@gxwsxx.com
- *  2015年2月12日下午5:44:52
- *
+ * @since 1.0
  */
 public interface RemoteReader extends Reader {
 
