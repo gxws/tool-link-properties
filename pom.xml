@@ -23,6 +23,9 @@
 		<!-- zookeeper -->
 		<version.zookeeper.curator>2.7.1</version.zookeeper.curator>
 
+		<!-- testng -->
+		<version.testng>6.9.6</version.testng>
+
 	</properties>
 
 	<dependencies>
@@ -56,13 +59,12 @@
 			<artifactId>curator-framework</artifactId>
 			<version>${version.zookeeper.curator}</version>
 		</dependency>
-		
-		<!-- <dependency>
-			<groupId>com.gxws</groupId>
-			<artifactId>tool-test</artifactId>
-			<version>${version.gxws.tool.test}</version>
-			<scope>test</scope>
-		</dependency> -->
+
+		<dependency>
+			<groupId>org.testng</groupId>
+			<artifactId>testng</artifactId>
+			<version>${version.testng}</version>
+		</dependency>
 	</dependencies>
 
 	<build>
