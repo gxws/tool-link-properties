@@ -34,6 +34,12 @@
 			<artifactId>spring-web</artifactId>
 			<version>${version.springframework}</version>
 		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+			<version>${version.springframework}</version>
+			<scope>test</scope>
+		</dependency>
 
 		<dependency>
 			<groupId>javax.servlet</groupId>
@@ -64,6 +70,7 @@
 			<groupId>org.testng</groupId>
 			<artifactId>testng</artifactId>
 			<version>${version.testng}</version>
+			<scope>test</scope>
 		</dependency>
 	</dependencies>
 
