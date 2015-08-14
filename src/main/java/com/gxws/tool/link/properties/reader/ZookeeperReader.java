@@ -45,7 +45,7 @@ public class ZookeeperReader implements RemoteReader {
 		} catch (Exception e1) {
 			LinkPropertiesReaderInitException e = new LinkPropertiesReaderInitException();
 			e.setStackTrace(e1.getStackTrace());
-			e.setMessage(":");
+			e.appendMessage(e1.getMessage());
 			throw e;
 		}
 	}
