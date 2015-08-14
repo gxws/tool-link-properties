@@ -24,25 +24,20 @@ import com.gxws.tool.link.properties.core.ProjectPropertiesCore;
  * @author zhuwl120820@gxwsxx.com
  * @since 1.0
  */
-public class LinkPropertiesBean extends PropertyPlaceholderConfigurer implements
-		ServletContextAware {
+public class LinkPropertiesBean extends PropertyPlaceholderConfigurer implements ServletContextAware {
 
 	private List<String> constantClassnames;
 
 	private ServletContext servletContext;
 
 	@Override
-	protected void processProperties(
-			ConfigurableListableBeanFactory beanFactoryToProcess,
-			Properties props) throws BeansException {
-		IPropertiesCore c = null;
+	protected void processProperties(ConfigurableListableBeanFactory beanFactoryToProcess, Properties props)
+			throws BeansException {
 		List<IPropertiesCore> corelist = new ArrayList<>();
 		// 处理项目全局变量
-		c = new ProjectPropertiesCore(servletContext);
-		corelist.add(c);
+		corelist.add(new ProjectPropertiesCore(servletContext));
 		// 处理项目自定义变量
-		c = new LinkPropertiesCore(constantClassnames);
-		corelist.add(c);
+		corelist.add(new LinkPropertiesCore(constantClassnames));
 		for (IPropertiesCore core : corelist) {
 			core.servletContextProperties(servletContext);
 			core.springProperties(props);
