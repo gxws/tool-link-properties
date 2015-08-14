@@ -16,7 +16,8 @@ public interface IPropertiesCore {
 	 * 
 	 * @author zhuwl120820@gxwsxx.com
 	 * @param props
-	 * @since
+	 *            spring的Properties参数对象
+	 * @since 1.1
 	 */
 	public void springProperties(Properties props);
 
@@ -25,7 +26,8 @@ public interface IPropertiesCore {
 	 * 
 	 * @author zhuwl120820@gxwsxx.com
 	 * @param servletContext
-	 * @since
+	 *            web应用的ServletContext对象
+	 * @since 1.1
 	 */
 	public void servletContextProperties(ServletContext servletContext);
 }
