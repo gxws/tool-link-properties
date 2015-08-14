@@ -20,6 +20,7 @@ import com.gxws.tool.link.properties.exception.LinkPropertiesBaseException;
 import com.gxws.tool.link.properties.exception.LinkPropertiesReaderInitException;
 import com.gxws.tool.link.properties.reader.FileReader;
 import com.gxws.tool.link.properties.reader.Reader;
+import com.gxws.tool.link.properties.reader.ReaderFactory;
 import com.gxws.tool.link.properties.reader.ZookeeperReader;
 
 /**
@@ -40,6 +41,8 @@ public class LinkPropertiesCore implements IPropertiesCore {
 
 	private Set<Property> propertySet;
 
+	private static final String READER_SYSTEM_PROPERTY_KEY = "link.properties.reader";
+
 	/**
 	 * 指定静态类，参数以List方式指定
 	 * 
@@ -51,20 +54,21 @@ public class LinkPropertiesCore implements IPropertiesCore {
 	 */
 	public LinkPropertiesCore(List<String> classnames) {
 		constantClassList = ct.forClasses(classnames);
-		initReader();
+		// initReader();
+		initReaderSpecific();
 		readLinkProperties();
 	}
 
 	/**
-	 * 初始化数据读取对象reader
+	 * 初始化配置源读取Reader对象。
 	 * 
 	 * @author zhuwl120820@gxwsxx.com
-	 *
+	 * @Deprecated 1.2以后废弃，修改配置读取策略，将从系统变量读取环境和读取策略。不再从环境变量判断读取策略。
 	 * @since 1.1
 	 */
+	@Deprecated
 	private void initReader() {
-		if (ProjectConstant.onlineEnvSet
-				.contains(ProjectConstant.NAME_PROJECT_ENV)) {
+		if (ProjectConstant.onlineEnvSet.contains(ProjectConstant.NAME_PROJECT_ENV)) {
 			try {
 				reader = new ZookeeperReader();
 			} catch (LinkPropertiesReaderInitException e) {
@@ -78,6 +82,28 @@ public class LinkPropertiesCore implements IPropertiesCore {
 				log.error("找不到 'link properties' 资源", e);
 				return;
 			}
+		}
+	}
+
+	/**
+	 * 使用系统变量指定配置源读取对象Reader。<br>
+	 * 系统变量分为操作系统环境变量和jvm环境变量。<br>
+	 * 操作系统环境变量通过System.getenv(key)获取，linux通过profile设置，windows通过高级系统设置->高级->
+	 * 环境变量进行设置。<br>
+	 * jvm环境变量通过，System.getProperty(key)获取，通过启动java进程进行设置。<br>
+	 * 
+	 * @author zhuwl120820@gxwsxx.com
+	 * @since 1.2
+	 */
+	private void initReaderSpecific() {
+		String name = System.getProperty(READER_SYSTEM_PROPERTY_KEY);
+		if (null == name) {
+			name = "file";
+		}
+		try {
+			this.reader = ReaderFactory.newReaderInstance(name);
+		} catch (LinkPropertiesReaderInitException e) {
+			log.error(e.getMessage(), e);
 		}
 	}
 
