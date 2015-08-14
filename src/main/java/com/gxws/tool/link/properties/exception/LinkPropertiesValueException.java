@@ -15,6 +15,6 @@ public class LinkPropertiesValueException extends LinkPropertiesBaseException {
 	 * @since 1.1
 	 */
 	public LinkPropertiesValueException() {
-		this.setMsg("配置信息属性值异常");
+		this.setMsg("配置信息属性值异常。");
 	}
 }

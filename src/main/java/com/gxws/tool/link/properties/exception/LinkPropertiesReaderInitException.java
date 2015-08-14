@@ -10,6 +10,6 @@ public class LinkPropertiesReaderInitException extends LinkPropertiesBaseExcepti
 	private static final long serialVersionUID = -4918054219335019375L;
 
 	public LinkPropertiesReaderInitException() {
-		this.setMsg("配置读取对象初始化异常");
+		this.setMsg("配置读取对象初始化异常。");
 	}
 }

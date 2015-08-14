@@ -19,7 +19,7 @@ public class LinkPropertiesBaseException extends BaseException {
 	 * @since 1.0
 	 */
 	public LinkPropertiesBaseException() {
-		this.setMsg("配置信息异常");
+		this.setMsg("配置信息异常。");
 	}
 
 	@Override
