@@ -29,6 +29,17 @@ spring framework版本修改为4.1.7.RELEASE。<br>
 增加了一个servlet context path系统变量别名。调用方式为${ctx}。<br>
 修复了项目启动时没有servlet context的空指针异常。<br>
 
+### 1.2.0
+修改注释信息，优化代码。<br>
+修改异常类的结构，代码优化。<br>
+修改配置读取策略，将从系统变量读取环境和读取策略。不再从环境变量判断读取策略。<br>
+修改maven依赖，tool-common版本修改为1.2.0-RELEASE。<br>
+<br>
+添加servlet context属性名称，可以通过注解中指定的属性名称，读取相应的信息。<br>
+添加依赖testng测试框架，版本为6.9.6<br>
+添加依赖spring-test测试框架。<br>
+
+
 功能点
 ---
 ### 1、项目启动时初始化“全局变量”配置

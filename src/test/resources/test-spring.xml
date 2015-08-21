@@ -2,17 +2,22 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:beans="http://www.springframework.org/schema/beans"
-	xsi:schemaLocation="http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.1.xsd
-        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.1.xsd">
-
+	xsi:schemaLocation="http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
 	<!-- 读取配置 -->
 	<bean class="com.gxws.tool.link.properties.spring.LinkPropertiesBean">
 		<property name="constantClassnames">
 			<list>
-				<value>com.gxws.tool.link.properties.constant.LinkPropertiesConstant</value>
+				<value>com.gxws.tool.link.properties.core.test.Constant</value>
 			</list>
 		</property>
+	</bean>
+	<!-- 值获取测试 -->
+	<bean class="com.gxws.tool.link.properties.core.test.SpringPropertyTestBean">
+		<property name="property1" value="${p1}" />
+		<property name="property2" value="${p2}" />
+		<property name="property3" value="${p3}" />
 	</bean>
 
 </beans>
